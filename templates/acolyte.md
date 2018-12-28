@@ -31,5 +31,3 @@ ___
 > ***Club.*** *Melee Weapon Attack:* +2 to hit, reach 5ft., one target. *Hit* 2 (1d4) bludgeoning damage.
 
 <div class='pageNumber auto'></div>
-
-\page
