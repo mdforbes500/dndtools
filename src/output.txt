@@ -22,6 +22,8 @@ ___
 > - **Challenge** 1/4 (50 XP)
 > ___
 <!-- insert features -->
+> ***Fey Ancestry***. The acolyte has advantage on saving throws against being charmed, and magic can't put you to sleep.
+>
 > ***Spellcasting***. The acolyte is a 1st-level spellcaster. Its spellcasting ability it Wisdom (spell save DC 12, +4 to hit with spell attacks). The acolyte has the following cleric spells prepared:
 >
 > Cantrips (at will): *light, sacred flame, thaumaturgy*
