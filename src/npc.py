@@ -205,6 +205,7 @@ class NPC:
     def update_modifiers(self):
         for index, modifer in enumerate(self.modifiers):
             modifer = (self.abilities[index] - 10)//2
+            self.modifiers[index] = modifier
 
     def set_challenge_rating(self, cr):
         cr = float(cr)
