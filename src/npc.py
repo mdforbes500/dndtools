@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+import item.py
+import armor.py
+
 class NPC:
     def __init__(self, name):
         self.name = str(name)
@@ -231,3 +236,22 @@ class NPC:
             self.proficency = 8
         else:
             self.proficency = 9
+
+    def add_item(self, item):
+        self.items[item.get_name()] = item
+
+    def equip(self, item):
+        if item.type == "armor" and item.isequipped == False:
+            if self.get_ability_score("STR") >= item.str:
+                item.isequipped = True
+        elif item.type !="armor" and item.isequipped == False:
+            item.isequipped = True
+
+    def unequip(self, item):
+        if item.isequipped == True:
+            item.isequipped = False
+
+    def update_armor(self):
+        for item in self.items:
+            if item.type == "armor" and item.isequipped == True:
+                if item.subtype == "Medium":
