@@ -351,17 +351,29 @@ class NPC:
         size = self.get_size()
         if size == "Tiny":
             sizemod = 4
+            avg_hp = 2.5
         elif size == "Small":
             sizemod = 6
+            avg_hp = 3.5
         elif size == "Medium":
             sizemod = 8
+            avg_hp = 4.5
         elif size == "Large":
             sizemod = 10
+            avg_hp = 5.5
         elif size == "Huge":
             sizemod = 12
+            avg_hp = 6.5
         elif size == "Gargantuan":
             sizemod = 20
+            avg_hp = 10.5
         else:
             print("Not a valid size.")
 
-        
+        max_dice = self.hp/(sizemod + self.get_modifier("CON"))
+        min_dice = self.hp/(1 + self.get_modifier("CON"))
+        max_hp = max_dice * (sizemod + self.get_modifier("CON"))
+        min_hp = min_dice * (sizemod + self.get_modifier("CON"))
+        if self.hp <= max_hp and self.hp >= min_hp:
+            while max_dice - min_dice ~= 0:
+                
