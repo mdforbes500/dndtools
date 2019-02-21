@@ -255,3 +255,14 @@ class NPC:
         for item in self.items:
             if item.type == "armor" and item.isequipped == True:
                 if item.subtype == "Medium":
+                    self.ac = item.ac + self.get_modifier("DEX")
+                elif item.subtype == "Heavy":
+                    self.ac = item.ac
+                elif item.subtype == "Shield":
+                    self.ac = self.ac + item.ac
+                else:
+                    self.ac = item.ac
+            else:
+                print("Item is not armor.")
+
+    def 
