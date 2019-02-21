@@ -5,6 +5,10 @@ import armor.py
 import random
 
 class NPC:
+    """
+    NPC: Contains methods for modifying basic stat block to create a new
+    non-player character.
+    """
     def __init__(self, name):
         self.name = str(name)
         self.cr = 0
@@ -267,6 +271,9 @@ class NPC:
                 print("Item is not armor.")
 
     def set_hp(self):
+    """
+    SET_HP: Sets the HP at a random number based upon challenge rating.
+    """
         cr = self.cr
         if cr == 0:
             self.hp = random.randint(1,6)
@@ -338,3 +345,23 @@ class NPC:
             self.hp = random.randint(806,850)
         else:
             print("Not a valid CR range.")
+
+    def update_dicecode(self):
+        self.set_hp()
+        size = self.get_size()
+        if size == "Tiny":
+            sizemod = 4
+        elif size == "Small":
+            sizemod = 6
+        elif size == "Medium":
+            sizemod = 8
+        elif size == "Large":
+            sizemod = 10
+        elif size == "Huge":
+            sizemod = 12
+        elif size == "Gargantuan":
+            sizemod = 20
+        else:
+            print("Not a valid size.")
+
+        
