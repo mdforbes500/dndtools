@@ -2,6 +2,7 @@
 
 import item.py
 import armor.py
+import random
 
 class NPC:
     def __init__(self, name):
@@ -265,4 +266,75 @@ class NPC:
             else:
                 print("Item is not armor.")
 
-    def 
+    def set_hp(self):
+        cr = self.cr
+        if cr == 0:
+            self.hp = random.randint(1,6)
+        elif cr == 0.125:
+            self.hp = random.randint(7,35)
+        elif cr == 0.25:
+            self.hp = random.randint(36,49)
+        elif cr == 0.5:
+            self.hp = random.randint(50,70)
+        elif cr == 1:
+            self.hp = random.randint(71,85)
+        elif cr == 2:
+            self.hp = random.randint(86,100)
+        elif cr == 3:
+            self.hp = random.randint(101,115)
+        elif cr == 4:
+            self.hp = random.randint(116,130)
+        elif cr == 5:
+            self.hp = random.randint(131,145)
+        elif cr == 6:
+            self.hp = random.randint(146,160)
+        elif cr == 7:
+            self.hp = random.randint(161,175)
+        elif cr == 8:
+            self.hp = random.randint(176,190)
+        elif cr == 9:
+            self.hp = random.randint(191,205)
+        elif cr == 10:
+            self.hp = random.randint(206,220)
+        elif cr == 11:
+            self.hp = random.randint(221,235)
+        elif cr == 12:
+            self.hp = random.randint(236,250)
+        elif cr == 13:
+            self.hp = random.randint(251,265)
+        elif cr == 14:
+            self.hp = random.randint(266,280)
+        elif cr == 15:
+            self.hp = random.randint(281,295)
+        elif cr == 16:
+            self.hp = random.randint(296,310)
+        elif cr == 17:
+            self.hp = random.randint(311,325)
+        elif cr == 18:
+            self.hp = random.randint(326,340)
+        elif cr == 19:
+            self.hp = random.randint(341,355)
+        elif cr == 20:
+            self.hp = random.randint(356,400)
+        elif cr == 21:
+            self.hp = random.randint(401,445)
+        elif cr == 22:
+            self.hp = random.randint(446,490)
+        elif cr == 23:
+            self.hp = random.randint(491,535)
+        elif cr == 24:
+            self.hp = random.randint(536,580)
+        elif cr == 25:
+            self.hp = random.randint(581,625)
+        elif cr == 26:
+            self.hp = random.randint(626,670)
+        elif cr == 27:
+            self.hp = random.randint(671,715)
+        elif cr == 28:
+            self.hp = random.randint(716,760)
+        elif cr == 29:
+            self.hp = random.randint(761,805)
+        elif cr == 30:
+            self.hp = random.randint(806,850)
+        else:
+            print("Not a valid CR range.")
