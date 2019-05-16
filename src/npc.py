@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
-import item.py
-import armor.py
+import item
+import armor
 import random
+import math
 
 class NPC:
     """
@@ -32,7 +33,14 @@ class NPC:
         return str(self.name)
 
     def get_rating(self):
-        return self.cr
+        if self.cr == 0.125:
+            return "1/8"
+        elif self.cr == 0.25:
+            return "1/4"
+        elif self.cr == 0.5:
+            return "1/2"
+        else:
+            return "{0:.0f}".format(self.cr)
 
     def get_size(self):
         return str(self.size)
@@ -44,7 +52,7 @@ class NPC:
         return str(self.race)
 
     def get_alignment(self):
-        return str(self.race)
+        return str(self.alignment)
 
     def get_ability_score(self, ability):
         ability = str(ability)
@@ -85,7 +93,8 @@ class NPC:
         return str(modifier)
 
     def get_proficiency(self):
-        return self.proficiency
+        output = "+{0}".format(self.proficiency)
+        return output
 
     def get_armor(self):
         return self.armor
@@ -230,17 +239,17 @@ class NPC:
         elif cr > 4 and cr <= 8:
             self.proficiency = 3
         elif cr > 8 and cr <= 12:
-            self.proficency = 4
+            self.proficiency = 4
         elif cr > 12 and cr <= 16:
-            self.proficency = 5
+            self.proficiency = 5
         elif cr > 16 and cr <= 20:
-            self.proficency = 6
+            self.proficiency = 6
         elif cr > 20 and cr <= 24:
-            self.proficency = 7
+            self.proficiency = 7
         elif cr > 24 and cr <= 28:
-            self.proficency = 8
+            self.proficiency = 8
         else:
-            self.proficency = 9
+            self.proficiency = 9
 
     def add_item(self, item):
         self.items[item.get_name()] = item
@@ -271,9 +280,9 @@ class NPC:
                 print("Item is not armor.")
 
     def set_hp(self):
-    """
-    SET_HP: Sets the HP at a random number based upon challenge rating.
-    """
+        """
+        SET_HP: Sets the HP at a random number based upon challenge rating.
+        """
         cr = self.cr
         if cr == 0:
             self.hp = random.randint(1,6)
@@ -370,10 +379,19 @@ class NPC:
         else:
             print("Not a valid size.")
 
-        max_dice = self.hp/(sizemod + self.get_modifier("CON"))
-        min_dice = self.hp/(1 + self.get_modifier("CON"))
-        max_hp = max_dice * (sizemod + self.get_modifier("CON"))
-        min_hp = min_dice * (sizemod + self.get_modifier("CON"))
-        if self.hp <= max_hp and self.hp >= min_hp:
-            while max_dice - min_dice ~= 0:
-                
+        max_dice = math.ceil(float(self.hp)/float(sizemod + self.modifiers[2]))
+        min_dice = self.hp//(1 + self.modifiers[2])
+        #bounds
+        max_hp = max_dice*(sizemod + self.modifiers[2])
+        min_hp = min_dice*(sizemod + self.modifiers[2])
+        #starting values
+        num_dice = 1
+        temp_hp = num_dice*(sizemod + self.modifiers[2])
+        while True:
+            if temp_hp <= max_hp and temp_hp >= min_hp:
+                 num_dice = num_dice + 1
+                 temp_hp = num_dice*(sizemod + self.modifiers[2])
+                 if temp_hp <= self.hp + 6 + self.modifiers[2] and temp_hp >= self.hp - 1 - self.modifiers[2]:
+                     break
+        dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
+        self.dicecode = dice_code

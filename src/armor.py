@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-import item.py
+import item
 
-class Armor(Item):
+class Armor(item.Item):
 
     def __init__(self, name, subtype, cost, ac, str, stealth, weight):
         super().__init__(self, name, "armor", cost, weight)
