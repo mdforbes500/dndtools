@@ -55,9 +55,7 @@ print(walter.get_ability_score("CON")) #good
 print(walter.get_modifier("CON")) #good
 #HP
 print(walter.get_hp()) #good
-walter.set_challenge_rating(1) #good
-walter.set_hp() #good
-print(walter.get_hp()) #good
-
+walter.set_challenge_rating(12) #good
 walter.update_dicecode()
 print(walter.get_dicecode())
+print(walter.get_hp())

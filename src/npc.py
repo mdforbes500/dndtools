@@ -279,84 +279,114 @@ class NPC:
             else:
                 print("Item is not armor.")
 
-    def set_hp(self):
-        """
-        SET_HP: Sets the HP at a random number based upon challenge rating.
-        """
+    def update_dicecode(self):
         cr = self.cr
         if cr == 0:
-            self.hp = random.randint(1,6)
+            upper = 6
+            lower = 1
         elif cr == 0.125:
-            self.hp = random.randint(7,35)
+            upper = 35
+            lower = 7
         elif cr == 0.25:
-            self.hp = random.randint(36,49)
+            upper = 49
+            lower = 36
         elif cr == 0.5:
-            self.hp = random.randint(50,70)
+            upper = 70
+            lower = 50
         elif cr == 1:
-            self.hp = random.randint(71,85)
+            upper = 85
+            lower = 71
         elif cr == 2:
-            self.hp = random.randint(86,100)
+            upper = 100
+            lower = 86
         elif cr == 3:
-            self.hp = random.randint(101,115)
+            upper = 115
+            lower = 101
         elif cr == 4:
-            self.hp = random.randint(116,130)
+            upper = 130
+            lower = 116
         elif cr == 5:
-            self.hp = random.randint(131,145)
+            upper = 145
+            lower = 131
         elif cr == 6:
-            self.hp = random.randint(146,160)
+            upper = 160
+            lower = 146
         elif cr == 7:
-            self.hp = random.randint(161,175)
+            upper = 175
+            lower = 161
         elif cr == 8:
-            self.hp = random.randint(176,190)
+            upper = 190
+            lower = 176
         elif cr == 9:
-            self.hp = random.randint(191,205)
+            upper = 205
+            lower = 191
         elif cr == 10:
-            self.hp = random.randint(206,220)
+            upper = 220
+            lower = 206
         elif cr == 11:
-            self.hp = random.randint(221,235)
+            upper = 235
+            lower = 221
         elif cr == 12:
-            self.hp = random.randint(236,250)
+            upper = 250
+            lower = 236
         elif cr == 13:
-            self.hp = random.randint(251,265)
+            upper = 265
+            lower = 251
         elif cr == 14:
-            self.hp = random.randint(266,280)
+            upper = 280
+            lower = 226
         elif cr == 15:
-            self.hp = random.randint(281,295)
+            upper = 295
+            lower = 281
         elif cr == 16:
-            self.hp = random.randint(296,310)
+            upper = 310
+            lower = 296
         elif cr == 17:
-            self.hp = random.randint(311,325)
+            upper = 325
+            lower = 311
         elif cr == 18:
-            self.hp = random.randint(326,340)
+            upper = 340
+            lower = 326
         elif cr == 19:
-            self.hp = random.randint(341,355)
+            upper = 355
+            lower = 341
         elif cr == 20:
-            self.hp = random.randint(356,400)
+            upper = 400
+            lower = 356
         elif cr == 21:
-            self.hp = random.randint(401,445)
+            upper = 445
+            lower = 401
         elif cr == 22:
-            self.hp = random.randint(446,490)
+            upper = 490
+            lower = 446
         elif cr == 23:
-            self.hp = random.randint(491,535)
+            upper = 535
+            lower = 491
         elif cr == 24:
-            self.hp = random.randint(536,580)
+            upper = 580
+            lower = 536
         elif cr == 25:
-            self.hp = random.randint(581,625)
+            upper = 625
+            lower = 581
         elif cr == 26:
-            self.hp = random.randint(626,670)
+            upper = 670
+            lower = 626
         elif cr == 27:
-            self.hp = random.randint(671,715)
+            upper = 715
+            lower = 671
         elif cr == 28:
-            self.hp = random.randint(716,760)
+            upper = 760
+            lower = 716
         elif cr == 29:
-            self.hp = random.randint(761,805)
+            upper = 805
+            lower = 761
         elif cr == 30:
-            self.hp = random.randint(806,850)
+            upper = 850
+            lower = 806
         else:
             print("Not a valid CR range.")
+            return None
 
-    def update_dicecode(self):
-        self.set_hp()
         size = self.get_size()
         if size == "Tiny":
             sizemod = 4
@@ -378,20 +408,17 @@ class NPC:
             avg_hp = 10.5
         else:
             print("Not a valid size.")
+            return None
 
-        max_dice = math.ceil(float(self.hp)/float(sizemod + self.modifiers[2]))
-        min_dice = self.hp//(1 + self.modifiers[2])
-        #bounds
-        max_hp = max_dice*(sizemod + self.modifiers[2])
-        min_hp = min_dice*(sizemod + self.modifiers[2])
         #starting values
         num_dice = 1
         temp_hp = num_dice*(sizemod + self.modifiers[2])
         while True:
-            if temp_hp <= max_hp and temp_hp >= min_hp:
-                 num_dice = num_dice + 1
-                 temp_hp = num_dice*(sizemod + self.modifiers[2])
-                 if temp_hp <= self.hp + 6 + self.modifiers[2] and temp_hp >= self.hp - 1 - self.modifiers[2]:
-                     break
+            temp_hp = num_dice*(sizemod + self.modifiers[2])
+            if temp_hp <= upper and temp_hp >= lower:
+                break
+            num_dice = num_dice + 1
+
         dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
         self.dicecode = dice_code
+        self.hp = num_dice*avg_hp + self.modifiers[2]
