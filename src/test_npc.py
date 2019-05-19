@@ -57,5 +57,7 @@ print(walter.get_modifier("CON")) #good
 print(walter.get_hp()) #good
 walter.set_challenge_rating(12) #good
 walter.update_dicecode()
-print(walter.get_dicecode())
 print(walter.get_hp())
+
+#str method
+print(walter)

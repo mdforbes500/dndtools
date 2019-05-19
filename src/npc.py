@@ -17,12 +17,15 @@ class NPC:
         self.type = "humanoid"
         self.race = "(human)"
         self.alignment = "neutral"
+        self.speed = 30
         self.abilities = [10,10,10,10,10,10]
         self.modifiers = [0,0,0,0,0,0]
         self.proficiency = 2
-        self.armor = 10
-        self.hp = 1
-        self.dicecode = "(1d6)"
+        self.armor = "            <li><strong>Armor Class</strong> 10</li>\n"
+        self.hp = "            <li><strong>Hit Points</strong> 1 (1d6)</li>\n"
+        self.skills = {}
+        self.senses = []
+        self.languages = []
         self.features = {}
         self.actions = {}
         self.items = {}
@@ -101,9 +104,6 @@ class NPC:
 
     def get_hp(self):
         return self.hp
-
-    def get_dicecode(self):
-        return self.dicecode
 
     def get_feature(self, feature):
         feature = str(feature)
@@ -266,18 +266,20 @@ class NPC:
             item.isequipped = False
 
     def update_armor(self):
+        armor = 0
         for item in self.items:
             if item.type == "armor" and item.isequipped == True:
                 if item.subtype == "Medium":
-                    self.ac = item.ac + self.get_modifier("DEX")
+                    armor = item.ac + self.get_modifier("DEX")
                 elif item.subtype == "Heavy":
-                    self.ac = item.ac
+                    armor = item.ac
                 elif item.subtype == "Shield":
-                    self.ac = self.ac + item.ac
+                    armor = armor + item.ac
                 else:
-                    self.ac = item.ac
+                    armor = item.ac
             else:
                 print("Item is not armor.")
+        self.armor = "            <li><strong>Armor Class</strong> {0}</li>\n".format(armor)
 
     def update_dicecode(self):
         cr = self.cr
@@ -420,5 +422,75 @@ class NPC:
             num_dice = num_dice + 1
 
         dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
-        self.dicecode = dice_code
-        self.hp = num_dice*avg_hp + self.modifiers[2]
+        hit_points = int(num_dice*avg_hp + self.modifiers[2])
+        self.hp = "            <li><strong>Hit Points</strong> {0} {1}</li>\n".format(hit_points, dice_code)
+
+    #Print method
+    def __str__(self):
+        header = "\
+<head>\n\
+   <link rel=\"stylesheet\" href=\"CSS/phb.css\" />\n\
+   <style>\n\
+      .phb{ background : white;}\n\
+      .phb img{ display : none;}\n\
+      .phb hr+blockquote{background : white;}\n\
+   </style>\n\
+</head>\n\n"
+        body="\
+<body>\n\
+   <div class = 'phb'>\n\
+      <hr>\n\
+      <blockquote>\n\
+         <h2 id=\"{0}\">{0}</h2>\n\
+         <p><em>{1} {2}{3}, {4}</em></p>\n\
+         <hr>\n\
+         <ul>\n".format(self.name, self.size, self.type, self.race, self.alignment)
+        armor = self.armor
+        hit_points = self.hp
+        speed = "            <li><strong>Speed</strong> {0} ft.</li>\n         </ul>\n".format(self.speed)
+        abilities="\
+         <hr>\n\
+         <table>\n\
+            <thead>\n\
+               <tr>\n\
+                  <th style=\"text-align:center\">STR</th>\n\
+                  <th style=\"text-align:center\">DEX</th>\n\
+                  <th style=\"text-align:center\">CON</th>\n\
+                  <th style=\"text-align:center\">INT</th>\n\
+                  <th style=\"text-align:center\">WIS</th>\n\
+                  <th style=\"text-align:center\">CHA</th>\n\
+                </tr>\n\
+            </thead>\n\
+            <tbody>\n\
+               <tr>\n\
+                  <td style=\"text-align:center\">{0} ({1})</td>\n\
+                  <td style=\"text-align:center\">{2} ({3})</td>\n\
+                  <td style=\"text-align:center\">{4} ({5})</td>\n\
+                  <td style=\"text-align:center\">{6} ({7})</td>\n\
+                  <td style=\"text-align:center\">{8} ({9})</td>\n\
+                  <td style=\"text-align:center\">{10} ({11})</td>\n\
+               </tr>\n\
+            </tbody>\n\
+            </table>\n".format(self.abilities[0], self.modifiers[0], self.abilities[1], self.modifiers[1], self.abilities[2], self.modifiers[2], self.abilities[3], self.modifiers[3], self.abilities[4], self.modifiers[4], self.abilities[5], self.modifiers[5])
+        skills ="\
+            <hr>\n\
+            <ul>\n\
+               <li><strong>Skills</strong> Medicine +4, Religion +2</li>\n\
+               <li><strong>Senses</strong> passive Perception 10</li>\n\
+               <li><strong>Languages</strong> any one language (usually Common)</li>\n\
+               <li><strong>Challenge</strong> 1/4 (50 XP)</li>\n\
+            </ul>\n\
+            <hr>\n"
+        spells ="\
+            <p><strong><em>Spellcasting</em></strong>. The acolyte is a 1st-level spellcaster. Its spellcasting ability it Wisdom (spell save DC 12, +4 to hit with spell attacks). The acolyte has the following cleric spells prepared:</p>\n\
+            <p>Cantrips (at will): <em>light, sacred flame, thaumaturgy</em></p>\n\
+            <p>1st level (3 slots): <em>bless, cure wounds, sanctuary</em></p>\n"
+        actions ="\
+            <h3 id=\"actions\">Actions</h3>\n\
+            <p><strong><em>Club.</em></strong> <em>Melee Weapon Attack:</em> +2 to hit, reach 5ft., one target. <em>Hit</em> 2 (1d4) bludgeoning damage.</p>\n\
+      </blockquote>\n\
+      <div class='pageNumber auto'></div>\n\
+   </div>\n\
+</body>"
+        block = header + body + self.armor + hit_points + speed + abilities
+        return block
