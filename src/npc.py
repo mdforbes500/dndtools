@@ -24,12 +24,19 @@ class NPC:
         self.armor = "            <li><strong>Armor Class</strong> 10</li>\n"
         self.hp = "            <li><strong>Hit Points</strong> 1 (1d6)</li>\n"
         self.skills = {}
-        self.senses = []
-        self.languages = []
+        self.senses = ["passive Perception 10"]
+        self.languages = ["Common"]
         self.features = {}
-        self.actions = {}
+        self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
         self.items = {}
-        self.spells = []
+        self.cast_level = 1
+        self.caster = True
+        self.cast_ability = "Wisdom"
+        self.cast_save = 12
+        self.spell_attk = 4
+        self.spell_list = "cleric"
+        self.spells = [['light','sacred flame','thaumaturgy'],['bless','cure wounds','sanctuary']]
+        self.slots = [0,3]
 
     #Accessor methods
     def get_name(self):
@@ -204,17 +211,17 @@ class NPC:
         score = int(score)
         if score <= 30 and score > 0:
             if ability == "STR":
-                self.abilities[0] = score
+                self.abilities[0] = "{0}".format(score)
             elif ability == "DEX":
-                self.abilities[1] = score
+                self.abilities[1] = "{0}".format(score)
             elif ability == "CON":
-                self.abilities[2] = score
+                self.abilities[2] = "{0}".format(score)
             elif ability == "INT":
-                self.abilities[3] = score
+                self.abilities[3] = "{0}".format(score)
             elif ability == "WIS":
-                self.abilities[4] = score
+                self.abilities[4] = "{0}".format(score)
             elif ability == "CHA":
-                self.abilities[5] = score
+                self.abilities[5] = "{0}".format(score)
             else:
                 print("INPUT ERROR: Not a recognized ability tag!")
         else:
@@ -436,6 +443,7 @@ class NPC:
       .phb hr+blockquote{background : white;}\n\
    </style>\n\
 </head>\n\n"
+
         body="\
 <body>\n\
    <div class = 'phb'>\n\
@@ -445,9 +453,13 @@ class NPC:
          <p><em>{1} {2}{3}, {4}</em></p>\n\
          <hr>\n\
          <ul>\n".format(self.name, self.size, self.type, self.race, self.alignment)
+
         armor = self.armor
+
         hit_points = self.hp
+
         speed = "            <li><strong>Speed</strong> {0} ft.</li>\n         </ul>\n".format(self.speed)
+
         abilities="\
          <hr>\n\
          <table>\n\
@@ -462,35 +474,58 @@ class NPC:
                 </tr>\n\
             </thead>\n\
             <tbody>\n\
-               <tr>\n\
-                  <td style=\"text-align:center\">{0} ({1})</td>\n\
-                  <td style=\"text-align:center\">{2} ({3})</td>\n\
-                  <td style=\"text-align:center\">{4} ({5})</td>\n\
-                  <td style=\"text-align:center\">{6} ({7})</td>\n\
-                  <td style=\"text-align:center\">{8} ({9})</td>\n\
-                  <td style=\"text-align:center\">{10} ({11})</td>\n\
-               </tr>\n\
-            </tbody>\n\
-            </table>\n".format(self.abilities[0], self.modifiers[0], self.abilities[1], self.modifiers[1], self.abilities[2], self.modifiers[2], self.abilities[3], self.modifiers[3], self.abilities[4], self.modifiers[4], self.abilities[5], self.modifiers[5])
-        skills ="\
-            <hr>\n\
-            <ul>\n\
-               <li><strong>Skills</strong> Medicine +4, Religion +2</li>\n\
-               <li><strong>Senses</strong> passive Perception 10</li>\n\
-               <li><strong>Languages</strong> any one language (usually Common)</li>\n\
-               <li><strong>Challenge</strong> 1/4 (50 XP)</li>\n\
+               <tr>\n"
+        for index in range(6):
+            abilities+="\
+                  <td style=\"text-align:center\">{0} ({1})</td>\n".format(self.abilities[index], self.modifiers[index])
+        abilities+="               </tr>\n            </tbody>\n            </table>\n"
+
+        skills ="            <hr>\n            <ul>\n               <li><strong>Skills</strong>"
+        for skill in self.skills:
+            skills += "{0} {1}".format(self.skills.get(skill), self.skills[skill])
+        skills +="</li>\n"
+
+        senses ="               <li><strong>Senses</strong>"
+        for sense in self.senses:
+            senses +="{0} ".format(sense)
+        senses+="</li>\n"
+
+        languages ="               <li><strong>Languages</strong>"
+        for language in self.languages:
+                languages+="{0}".format(language)
+        languages+="</li>\n"
+
+        challenge ="               <li><strong>Challenge</strong>{0}</li>\n\
             </ul>\n\
-            <hr>\n"
-        spells ="\
-            <p><strong><em>Spellcasting</em></strong>. The acolyte is a 1st-level spellcaster. Its spellcasting ability it Wisdom (spell save DC 12, +4 to hit with spell attacks). The acolyte has the following cleric spells prepared:</p>\n\
-            <p>Cantrips (at will): <em>light, sacred flame, thaumaturgy</em></p>\n\
-            <p>1st level (3 slots): <em>bless, cure wounds, sanctuary</em></p>\n"
-        actions ="\
-            <h3 id=\"actions\">Actions</h3>\n\
-            <p><strong><em>Club.</em></strong> <em>Melee Weapon Attack:</em> +2 to hit, reach 5ft., one target. <em>Hit</em> 2 (1d4) bludgeoning damage.</p>\n\
-      </blockquote>\n\
-      <div class='pageNumber auto'></div>\n\
-   </div>\n\
-</body>"
-        block = header + body + self.armor + hit_points + speed + abilities
+            <hr>\n".format(int(self.cr))
+
+        if self.caster == True:
+            spells ="            <p><strong><em>Spellcasting</em></strong>. "
+            spells+= "{0} is a {1}-level spellcaster. ".format(self.name, self.cast_level)
+            spells+= "Its spellcasting ability is {0} (spell save DC {1}, {2} to hit with spell attacks). ".format(self.cast_ability, self.cast_save, self.spell_attk)
+            spells+= "{0} has the following {1} spells prepared:</p>\n".format(self.name, self.spell_list)
+            for index in range(len(self.spells)):
+                if index == 0:
+                    spells+="\
+            <p>Cantrips (at will): <em>"
+                    for spell in self.spells[index]:
+                        spells+="{0} ".format(spell)
+                    spells+="</em></p>\n"
+                if index > 0:
+                    spells+="\
+            <p>{0} level ({1} slots): <em>".format(index,self.slots[index])
+                    for spell in self.spells[index]:
+                        spells+="{0} ".format(spell)
+                    spells+="</em></p>\n"
+        else:
+            spells = ""
+
+        actions ="            <h3 id=\"actions\">Actions</h3>\n"
+        for action in self.actions:
+            actions+="\
+            <p><strong><em>{0}.</em></strong> <em>{1} Weapon Attack:</em> +{2} to hit, reach {3}ft., {4} target. ".format(action, self.actions[action][0], self.actions[action][1], self.actions[action][2], self.actions[action][3])
+            actions+="<em>Hit</em>{0} {1} damage.</p>\n".format(self.actions[action][4], self.actions[action][5])
+        actions+="      </blockquote>\n      <div class='pageNumber auto'></div>\n   </div>\n</body>"
+
+        block = header + body + self.armor + hit_points + speed + abilities + skills + senses + languages + challenge + spells + actions
         return block
