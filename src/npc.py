@@ -23,7 +23,7 @@ class NPC:
         self.proficiency = 2
         self.armor = "            <li><strong>Armor Class</strong> 10</li>\n"
         self.hp = "            <li><strong>Hit Points</strong> 1 (1d6)</li>\n"
-        self.skills = {}
+        self.skills = {'Medicine':4}
         self.senses = ["passive Perception 10"]
         self.languages = ["Common"]
         self.features = {}
@@ -482,7 +482,7 @@ class NPC:
 
         skills ="            <hr>\n            <ul>\n               <li><strong>Skills</strong>"
         for skill in self.skills:
-            skills += "{0} {1}".format(self.skills.get(skill), self.skills[skill])
+            skills += "{0} {1}".format(skill, self.skills[skill])
         skills +="</li>\n"
 
         senses ="               <li><strong>Senses</strong>"
