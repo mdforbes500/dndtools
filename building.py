@@ -1,252 +1,241 @@
+#!/usr/bin/env bash
+
 import random
 
-class Building(object):
-    type
-    details
-
+class Building:
+    """
+    Building class for D&D settlement generation. Randomly generates a
+    building's type and details for the Settelment class' generator.
+    """
     def __init__(self):
-        self.type = ''
-        self.details = ''
+        self.type = ""
+        self.details = ""
 
         # Roll the building's type
-        roll = random.randint(1,20)
+        roll = random.randint(1, 20)
 
         if roll <= 10:
             self.type = "Residence"
 
             # Roll details for residences
-            roll = random.randint(1 20);
-            if roll <= 2
+            roll = random.randint(1, 20)
+            if roll <= 2:
                 self.details = "Abandoned Squat"
-            elif roll > 2 && roll <= 8
+            elif roll > 2 and roll <= 8:
                 self.details = "Middle-class home"
-            elif roll > 8 && roll <= 10
+            elif roll > 8 and roll <= 10:
                 self.details = "Upper-class home"
-            elif roll > 10 && roll <= 15
+            elif roll > 10 and roll <= 15:
                 self.details = "Crowded tenement"
-            elif roll > 15 && roll <= 17
+            elif roll > 15 and roll <= 17:
                 self.details = "Orphanage"
-            elif roll == 18
+            elif roll is 18:
                 self.details = "Hidden slaver's den"
-            elif roll == 19
+            elif roll is 19:
                 self.details = "Front for a secret cult"
-            else
+            else:
                 self.details = "Lavish, guarded mansion"
 
         # Religious building
-        elif roll > 10 && roll <= 12
+        elif roll > 10 and roll <= 12:
             self.type = "Religious building"
 
             # Roll details for religious buildings
             roll = random.randint(1, 20)
-            if roll <= 10
+            if roll <= 10:
                 self.details = "Temple to a good or neutral deity"
-            elif roll > 10 && roll <= 12
+            elif roll > 10 and roll <= 12:
                 self.details = "Temple to a false deity (run by charlatan priests"
-            elif roll == 13
+            elif roll is 13:
                 self.details = "Home of ascetics"
-            elif roll > 13 && roll <= 15
+            elif roll > 13 and roll <= 15:
                 self.details = "Abandeoned shrine"
-            elif roll > 15 && roll <= 17
+            elif roll > 15 and roll <= 17:
                 self.details = "Library dedicated to religious study"
-            else
+            else:
                 self.details = "Hidden shrine to a fiend or evil deity"
 
             # Tavern
-        elif roll > 12 && roll <=15
+        elif roll > 12 and roll <=15:
             # Create Tavern Name
             firstpart = ""
             secondpart = ""
 
             roll = random.randint(1, 20)
-            if roll == 1
+            if roll is 1:
                 firstpart = "The Silver"
-            elif roll == 2
+            elif roll is 2:
                 firstpart = "The Golden"
-            elif roll == 3
+            elif roll is 3:
                 firstpart = "The Staggering"
-            elif roll == 4
+            elif roll is 4:
                 firstpart = "The Laughing"
-            elif roll == 5
+            elif roll is 5:
                 firstpart = "The Prancing"
-            elif roll == 6
+            elif roll is 6:
                 firstpart = "The Gilded"
-            elif roll == 7
+            elif roll is 7:
                 firstpart = "The Running"
-            elif roll == 8
+            elif roll is 8:
                 firstpart = "The Howling"
-            elif roll == 9
+            elif roll is 9:
                 firstpart = "The Slaughtered"
-            elif roll == 10
+            elif roll is 10:
                 firstpart = "The Leering"
-            elif roll == 11
+            elif roll is 11:
                 firstpart = "The Drunken"
-            elif roll == 12
+            elif roll is 12:
                 firstpart = "The Leaping"
-            elif roll == 13
+            elif roll is 13:
                 firstpart = "The Roaring"
-            elif roll == 14
+            elif roll is 14:
                 firstpart = "The Frowning"
-            elif roll == 15
+            elif roll is 15:
                 firstpart = "The Lonely"
-            elif roll == 16
+            elif roll is 16:
                 firstpart = "The Wandering"
-            elif roll == 17
+            elif roll is 17:
                 firstpart = "The Mysterious"
-            elif roll == 18
+            elif roll is 18:
                 firstpart = "The Barking"
-            elif roll == 19
+            elif roll is 19:
                 firstpart = "The Black"
-            else
+            else:
                 firstpart = "The Gleaming"
 
             roll = random.randint(1, 20)
-                if roll == 1
-                    secondpart = "Eel";
-                elseif roll == 2
-                    secondpart = "Dolphin";
-                elseif roll == 3
-                    secondpart = "Dwarf";
-                elseif roll == 4
-                    secondpart = "Pegasus";
-                elseif roll == 5
-                    secondpart = "Pony";
-                elseif roll == 6
-                    secondpart = "Rose";
-                elseif roll == 7
-                    secondpart = "Stag";
-                elseif roll == 8
-                    secondpart = "Wolf";
-                elseif roll == 9
-                    secondpart = "Lamb";
-                elseif roll == 10
-                    secondpart = "Demon";
-                elseif roll == 11
-                    secondpart = "Goat";
-                elseif roll == 12
-                    secondpart = "Spirit";
-                elseif roll == 13
-                    secondpart = "Horde";
-                elseif roll == 14
-                    secondpart = "Jester";
-                elseif roll == 15
-                    secondpart = "Mountain";
-                elseif roll == 16
-                    secondpart = "Eagle";
-                elseif roll == 17
-                    secondpart = "Satyr";
-                elseif roll == 18
-                    secondpart = "Dog";
-                elseif roll == 19
-                    secondpart = "Spider";
-                else
-                    secondpart = "Star";
-                end
+            if roll is 1:
+                secondpart = "Eel"
+            elif roll is 2:
+                secondpart = "Dolphin"
+            elif roll is 3:
+                secondpart = "Dwarf"
+            elif roll is 4:
+                secondpart = "Pegasus"
+            elif roll is 5:
+                secondpart = "Pony"
+            elif roll is 6:
+                secondpart = "Rose"
+            elif roll is 7:
+                secondpart = "Stag"
+            elif roll is 8:
+                secondpart = "Wolf"
+            elif roll is 9:
+                secondpart = "Lamb"
+            elif roll is 10:
+                secondpart = "Demon"
+            elif roll is 11:
+                secondpart = "Goat"
+            elif roll is 12:
+                secondpart = "Spirit"
+            elif roll is 13:
+                secondpart = "Horde"
+            elif roll is 14:
+                secondpart = "Jester"
+            elif roll is 15:
+                secondpart = "Mountain"
+            elif roll is 16:
+                secondpart = "Eagle"
+            elif roll is 17:
+                secondpart = "Satyr"
+            elif roll is 18:
+                secondpart = "Dog"
+            elif roll is 19:
+                secondpart = "Spider"
+            else:
+                secondpart = "Star"
 
-                tavernname = firstpart + " " + secondpart;
-                building.type = "Tavern: " + tavernname;
+            tavernname = firstpart + " " + secondpart
+            self.type = "Tavern: " + tavernname
 
-                % Roll details for taverns
-                roll = randi([1, 20]);
-                if roll < 5
-                    building.details = "Quiet, low-key bar";
-                elseif roll > 5 && roll <= 9
-                    building.details = "Raucous dive";
-                elseif roll == 10
-                    building.details = "Thieves' guild hangout";
-                elseif roll == 11
-                    building.details = "Gathering place for a secret society";
-                elseif roll > 11 && roll <= 13
-                    building.details = "Upper-class dining club";
-                elseif roll > 13 && roll <= 15
-                    building.details = "Gambling den";
-                elseif roll > 15 && roll <= 17
-                    building.details = "Caters to specific race or guild";
-                elseif roll == 18
-                    building.details = "Members-only club";
-                else
-                    building.details = "Brothel";
-                end
+            # Roll details for taverns
+            roll = random.randint(1, 20)
+            if roll < 5:
+                self.details = "Quiet, low-key bar"
+            elif roll > 5 and roll <= 9:
+                self.details = "Raucous dive"
+            elif roll is 10:
+                self.details = "Thieves' guild hangout"
+            elif roll is 11:
+                self.details = "Gathering place for a secret society"
+            elif roll > 11 and roll <= 13:
+                self.details = "Upper-class dining club"
+            elif roll > 13 and roll <= 15:
+                self.details = "Gambling den"
+            elif roll > 15 and roll <= 17:
+                self.details = "Caters to specific race or guild"
+            elif roll is 18:
+                self.details = "Members-only club"
+            else:
+                self.details = "Brothel"
 
-            %Warehouses
-            elseif roll > 15 && roll <= 17
-                %building = Building();      % Remove if not playing CoS
+        # Warehouses
+        elif roll > 15 and roll <= 17:
+            self.type = "Warehouse"
 
-                %---- UNCOMMENT IF NOT PLAYING COS ----%
-                building.type = "Warehouse";
+            # Roll details for warehouses
+            roll = random.randint(1, 20)
+            if roll < 4:
+                self.details = "Empty or abandoned"
+            elif roll > 4 and roll <= 6:
+                self.details = "Heavily guarded, expensive goods"
+            elif roll > 6 and roll <= 10:
+                self.details = "Cheap goods"
+            elif roll > 10 and roll <= 14:
+                self.details = "Bulk goods"
+            elif roll is 15:
+                self.details = "Live animals"
+            elif roll > 15 and roll <= 17:
+                self.details = "Weapons/armor"
+            elif roll > 17 and roll <= 19:
+                self.details = "Goods from a distant land"
+            else:
+                self.details = "Secret smuggler's den"
 
-                % Roll dtails for warehouses
-                roll = randi([1, 20]);
-                if roll < 4
-                    building.details = "Empty or abandoned";
-                elseif roll > 4 && roll <= 6
-                    building.details = "Heavily guarded, expensive goods";
-                elseif roll > 6 && roll <= 10
-                    building.details = "Cheap goods";
-                elseif roll > 10 && roll <= 14
-                    building.details = "Bulk goods";
-                elseif roll == 15
-                    building.details = "Live animals";
-                elseif roll > 15 && roll <= 17
-                    building.details = "Weapons/armor";
-                elseif roll > 17 && roll <= 19
-                    building.details = "Goods from a distant land";
-                else
-                    building.details = "Secret smuggler's den";
-                end
+        # Shops
+        else:
+            self.type = "Shop"
 
-            % Shops
-            else
-                %building = Building();      %Remove if not playing CoS
-
-                 %---- UNCOMMENT IF NOT PLAYING COS ----%
-                building.type = "Shop";
-
-                % Roll details for shops
-                roll = randi([1, 20]);
-                if roll == 1
-                    building.details = "Pawnshop";
-                elseif roll == 2
-                    building.details = "Herbs/incense";
-                elseif roll == 3
-                    building.details = "Fruits/vegetables";
-                elseif roll == 4
-                    building.details = "Dried meats";
-                elseif roll == 5
-                    building.details = "Pottery";
-                elseif roll == 6
-                    building.details = "Undertaker";
-                elseif roll == 7
-                    building.details = "Books";
-                elseif roll == 8
-                    building.details = "Moneylender";
-                elseif roll == 9
-                    building.details = "Weapons/armor";
-                elseif roll == 10
-                    building.details = "Chandler";
-                elseif roll == 11
-                    building.details = "Smithy";
-                elseif roll == 12
-                    building.details = "Carpenter";
-                elseif roll == 13
-                    building.details = "Weaver";
-                elseif roll == 14
-                    building.details = "Jeweler";
-                elseif roll == 15
-                    building.details = "Baker";
-                elseif roll == 16
-                    building.details = "Mapmaker";
-                elseif roll == 17
-                    building.details = "Tailor";
-                elseif roll == 18
-                    building.details = "Ropemaker";
-                elseif roll == 18
-                    building.details = "Mason";
-                else
-                    building.details = "Scribe";
-                end
-            end
-        end
-
-    end
-end
+            # Roll details for shops
+            roll = random.randint(1, 20)
+            if roll is 1:
+                self.details = "Pawnshop"
+            elif roll is 2:
+                self.details = "Herbs/incense"
+            elif roll is 3:
+                self.details = "Fruits/vegetables"
+            elif roll is 4:
+                self.details = "Dried meats"
+            elif roll is 5:
+                self.details = "Pottery"
+            elif roll is 6:
+                self.details = "Undertaker"
+            elif roll is 7:
+                self.details = "Books"
+            elif roll is 8:
+                self.details = "Moneylender"
+            elif roll is 9:
+                self.details = "Weapons/armor"
+            elif roll is 10:
+                self.details = "Chandler"
+            elif roll is 11:
+                self.details = "Smithy"
+            elif roll is 12:
+                self.details = "Carpenter"
+            elif roll is 13:
+                self.details = "Weaver"
+            elif roll is 14:
+                self.details = "Jeweler"
+            elif roll is 15:
+                self.details = "Baker"
+            elif roll is 16:
+                self.details = "Mapmaker"
+            elif roll is 17:
+                self.details = "Tailor"
+            elif roll is 18:
+                self.details = "Ropemaker"
+            elif roll is 18:
+                self.details = "Mason"
+            else:
+                self.details = "Scribe"
+#end of class
