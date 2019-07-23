@@ -1,9 +1,15 @@
 #!/usr/bin/python
 
-import item.py
-import armor.py
+import item
+import armor
+import random
+import math
 
 class NPC:
+    """
+    NPC: Contains methods for modifying basic stat block to create a new
+    non-player character.
+    """
     def __init__(self, name):
         self.name = str(name)
         self.cr = 0
@@ -11,23 +17,40 @@ class NPC:
         self.type = "humanoid"
         self.race = "(human)"
         self.alignment = "neutral"
+        self.speed = 30
         self.abilities = [10,10,10,10,10,10]
         self.modifiers = [0,0,0,0,0,0]
         self.proficiency = 2
-        self.armor = 10
-        self.hp = 1
-        self.dicecode = "(1d6)"
+        self.armor = "            <li><strong>Armor Class</strong> 10</li>\n"
+        self.hp = "            <li><strong>Hit Points</strong> 1 (1d6)</li>\n"
+        self.skills = {'Medicine':4}
+        self.senses = ["passive Perception 10"]
+        self.languages = ["Common"]
         self.features = {}
-        self.actions = {}
+        self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
         self.items = {}
-        self.spells = []
+        self.cast_level = 1
+        self.caster = True
+        self.cast_ability = "Wisdom"
+        self.cast_save = 12
+        self.spell_attk = 4
+        self.spell_list = "cleric"
+        self.spells = [['light','sacred flame','thaumaturgy'],['bless','cure wounds','sanctuary']]
+        self.slots = [0,3]
 
     #Accessor methods
     def get_name(self):
         return str(self.name)
 
     def get_rating(self):
-        return self.cr
+        if self.cr == 0.125:
+            return "1/8"
+        elif self.cr == 0.25:
+            return "1/4"
+        elif self.cr == 0.5:
+            return "1/2"
+        else:
+            return "{0:.0f}".format(self.cr)
 
     def get_size(self):
         return str(self.size)
@@ -39,7 +62,7 @@ class NPC:
         return str(self.race)
 
     def get_alignment(self):
-        return str(self.race)
+        return str(self.alignment)
 
     def get_ability_score(self, ability):
         ability = str(ability)
@@ -80,16 +103,14 @@ class NPC:
         return str(modifier)
 
     def get_proficiency(self):
-        return self.proficiency
+        output = "+{0}".format(self.proficiency)
+        return output
 
     def get_armor(self):
         return self.armor
 
     def get_hp(self):
         return self.hp
-
-    def get_dicecode(self):
-        return self.dicecode
 
     def get_feature(self, feature):
         feature = str(feature)
@@ -190,17 +211,17 @@ class NPC:
         score = int(score)
         if score <= 30 and score > 0:
             if ability == "STR":
-                self.abilities[0] = score
+                self.abilities[0] = "{0}".format(score)
             elif ability == "DEX":
-                self.abilities[1] = score
+                self.abilities[1] = "{0}".format(score)
             elif ability == "CON":
-                self.abilities[2] = score
+                self.abilities[2] = "{0}".format(score)
             elif ability == "INT":
-                self.abilities[3] = score
+                self.abilities[3] = "{0}".format(score)
             elif ability == "WIS":
-                self.abilities[4] = score
+                self.abilities[4] = "{0}".format(score)
             elif ability == "CHA":
-                self.abilities[5] = score
+                self.abilities[5] = "{0}".format(score)
             else:
                 print("INPUT ERROR: Not a recognized ability tag!")
         else:
@@ -225,17 +246,17 @@ class NPC:
         elif cr > 4 and cr <= 8:
             self.proficiency = 3
         elif cr > 8 and cr <= 12:
-            self.proficency = 4
+            self.proficiency = 4
         elif cr > 12 and cr <= 16:
-            self.proficency = 5
+            self.proficiency = 5
         elif cr > 16 and cr <= 20:
-            self.proficency = 6
+            self.proficiency = 6
         elif cr > 20 and cr <= 24:
-            self.proficency = 7
+            self.proficiency = 7
         elif cr > 24 and cr <= 28:
-            self.proficency = 8
+            self.proficiency = 8
         else:
-            self.proficency = 9
+            self.proficiency = 9
 
     def add_item(self, item):
         self.items[item.get_name()] = item
@@ -252,6 +273,259 @@ class NPC:
             item.isequipped = False
 
     def update_armor(self):
+        armor = 0
         for item in self.items:
             if item.type == "armor" and item.isequipped == True:
                 if item.subtype == "Medium":
+                    armor = item.ac + self.get_modifier("DEX")
+                elif item.subtype == "Heavy":
+                    armor = item.ac
+                elif item.subtype == "Shield":
+                    armor = armor + item.ac
+                else:
+                    armor = item.ac
+            else:
+                print("Item is not armor.")
+        self.armor = "            <li><strong>Armor Class</strong> {0}</li>\n".format(armor)
+
+    def update_dicecode(self):
+        cr = self.cr
+        if cr == 0:
+            upper = 6
+            lower = 1
+        elif cr == 0.125:
+            upper = 35
+            lower = 7
+        elif cr == 0.25:
+            upper = 49
+            lower = 36
+        elif cr == 0.5:
+            upper = 70
+            lower = 50
+        elif cr == 1:
+            upper = 85
+            lower = 71
+        elif cr == 2:
+            upper = 100
+            lower = 86
+        elif cr == 3:
+            upper = 115
+            lower = 101
+        elif cr == 4:
+            upper = 130
+            lower = 116
+        elif cr == 5:
+            upper = 145
+            lower = 131
+        elif cr == 6:
+            upper = 160
+            lower = 146
+        elif cr == 7:
+            upper = 175
+            lower = 161
+        elif cr == 8:
+            upper = 190
+            lower = 176
+        elif cr == 9:
+            upper = 205
+            lower = 191
+        elif cr == 10:
+            upper = 220
+            lower = 206
+        elif cr == 11:
+            upper = 235
+            lower = 221
+        elif cr == 12:
+            upper = 250
+            lower = 236
+        elif cr == 13:
+            upper = 265
+            lower = 251
+        elif cr == 14:
+            upper = 280
+            lower = 226
+        elif cr == 15:
+            upper = 295
+            lower = 281
+        elif cr == 16:
+            upper = 310
+            lower = 296
+        elif cr == 17:
+            upper = 325
+            lower = 311
+        elif cr == 18:
+            upper = 340
+            lower = 326
+        elif cr == 19:
+            upper = 355
+            lower = 341
+        elif cr == 20:
+            upper = 400
+            lower = 356
+        elif cr == 21:
+            upper = 445
+            lower = 401
+        elif cr == 22:
+            upper = 490
+            lower = 446
+        elif cr == 23:
+            upper = 535
+            lower = 491
+        elif cr == 24:
+            upper = 580
+            lower = 536
+        elif cr == 25:
+            upper = 625
+            lower = 581
+        elif cr == 26:
+            upper = 670
+            lower = 626
+        elif cr == 27:
+            upper = 715
+            lower = 671
+        elif cr == 28:
+            upper = 760
+            lower = 716
+        elif cr == 29:
+            upper = 805
+            lower = 761
+        elif cr == 30:
+            upper = 850
+            lower = 806
+        else:
+            print("Not a valid CR range.")
+            return None
+
+        size = self.get_size()
+        if size == "Tiny":
+            sizemod = 4
+            avg_hp = 2.5
+        elif size == "Small":
+            sizemod = 6
+            avg_hp = 3.5
+        elif size == "Medium":
+            sizemod = 8
+            avg_hp = 4.5
+        elif size == "Large":
+            sizemod = 10
+            avg_hp = 5.5
+        elif size == "Huge":
+            sizemod = 12
+            avg_hp = 6.5
+        elif size == "Gargantuan":
+            sizemod = 20
+            avg_hp = 10.5
+        else:
+            print("Not a valid size.")
+            return None
+
+        #starting values
+        num_dice = 1
+        temp_hp = num_dice*(sizemod + self.modifiers[2])
+        while True:
+            temp_hp = num_dice*(sizemod + self.modifiers[2])
+            if temp_hp <= upper and temp_hp >= lower:
+                break
+            num_dice = num_dice + 1
+
+        dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
+        hit_points = int(num_dice*avg_hp + self.modifiers[2])
+        self.hp = "            <li><strong>Hit Points</strong> {0} {1}</li>\n".format(hit_points, dice_code)
+
+    #Print method
+    def __str__(self):
+        header = "\
+<head>\n\
+   <link rel=\"stylesheet\" href=\"CSS/phb.css\" />\n\
+   <style>\n\
+      .phb{ background : white;}\n\
+      .phb img{ display : none;}\n\
+      .phb hr+blockquote{background : white;}\n\
+   </style>\n\
+</head>\n\n"
+
+        body="\
+<body>\n\
+   <div class = 'phb'>\n\
+      <hr>\n\
+      <blockquote>\n\
+         <h2 id=\"{0}\">{0}</h2>\n\
+         <p><em>{1} {2}{3}, {4}</em></p>\n\
+         <hr>\n\
+         <ul>\n".format(self.name, self.size, self.type, self.race, self.alignment)
+
+        armor = self.armor
+
+        hit_points = self.hp
+
+        speed = "            <li><strong>Speed</strong> {0} ft.</li>\n         </ul>\n".format(self.speed)
+
+        abilities="\
+         <hr>\n\
+         <table>\n\
+            <thead>\n\
+               <tr>\n\
+                  <th style=\"text-align:center\">STR</th>\n\
+                  <th style=\"text-align:center\">DEX</th>\n\
+                  <th style=\"text-align:center\">CON</th>\n\
+                  <th style=\"text-align:center\">INT</th>\n\
+                  <th style=\"text-align:center\">WIS</th>\n\
+                  <th style=\"text-align:center\">CHA</th>\n\
+                </tr>\n\
+            </thead>\n\
+            <tbody>\n\
+               <tr>\n"
+        for index in range(6):
+            abilities+="\
+                  <td style=\"text-align:center\">{0} ({1})</td>\n".format(self.abilities[index], self.modifiers[index])
+        abilities+="               </tr>\n            </tbody>\n            </table>\n"
+
+        skills ="            <hr>\n            <ul>\n               <li><strong>Skills</strong>"
+        for skill in self.skills:
+            skills += "{0} {1}".format(skill, self.skills[skill])
+        skills +="</li>\n"
+
+        senses ="               <li><strong>Senses</strong>"
+        for sense in self.senses:
+            senses +="{0} ".format(sense)
+        senses+="</li>\n"
+
+        languages ="               <li><strong>Languages</strong>"
+        for language in self.languages:
+                languages+="{0}".format(language)
+        languages+="</li>\n"
+
+        challenge ="               <li><strong>Challenge</strong>{0}</li>\n\
+            </ul>\n\
+            <hr>\n".format(int(self.cr))
+
+        if self.caster == True:
+            spells ="            <p><strong><em>Spellcasting</em></strong>. "
+            spells+= "{0} is a {1}-level spellcaster. ".format(self.name, self.cast_level)
+            spells+= "Its spellcasting ability is {0} (spell save DC {1}, {2} to hit with spell attacks). ".format(self.cast_ability, self.cast_save, self.spell_attk)
+            spells+= "{0} has the following {1} spells prepared:</p>\n".format(self.name, self.spell_list)
+            for index in range(len(self.spells)):
+                if index == 0:
+                    spells+="\
+            <p>Cantrips (at will): <em>"
+                    for spell in self.spells[index]:
+                        spells+="{0} ".format(spell)
+                    spells+="</em></p>\n"
+                if index > 0:
+                    spells+="\
+            <p>{0} level ({1} slots): <em>".format(index,self.slots[index])
+                    for spell in self.spells[index]:
+                        spells+="{0} ".format(spell)
+                    spells+="</em></p>\n"
+        else:
+            spells = ""
+
+        actions ="            <h3 id=\"actions\">Actions</h3>\n"
+        for action in self.actions:
+            actions+="\
+            <p><strong><em>{0}.</em></strong> <em>{1} Weapon Attack:</em> +{2} to hit, reach {3}ft., {4} target. ".format(action, self.actions[action][0], self.actions[action][1], self.actions[action][2], self.actions[action][3])
+            actions+="<em>Hit</em>{0} {1} damage.</p>\n".format(self.actions[action][4], self.actions[action][5])
+        actions+="      </blockquote>\n      <div class='pageNumber auto'></div>\n   </div>\n</body>"
+
+        block = header + body + self.armor + hit_points + speed + abilities + skills + senses + languages + challenge + spells + actions
+        return block
