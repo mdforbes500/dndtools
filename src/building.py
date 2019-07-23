@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python
 
 import random
 
@@ -238,4 +238,10 @@ class Building:
                 self.details = "Mason"
             else:
                 self.details = "Scribe"
+
+    def __repr__(self):
+        strout = self.type + ", " + self.details
+        return strout
+
+        #__repr__ = __str__
 #end of class
