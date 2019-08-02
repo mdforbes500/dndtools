@@ -347,10 +347,10 @@ class Settlement:
         pageindex = floor(len(self.buildings)/45)+1
         for j in range(pageindex):
             for i in range((j)*44+start, (j)*44+final):
-                strout = "| " + str(i) + " | " + self.buildings[i].type + " | " + self.buildings[i].details + " |\n"
-                fileID.write(strout)
                 if i >= len(self.buildings):
                     break
+                strout = "| " + str(i) + " | " + self.buildings[i].type + " | " + self.buildings[i].details + " |\n"
+                fileID.write(strout)
             if j < pageindex:
                 pagediv = "</div>\n\n\\page\n\n<div class='wide'>\n| Number | Building Type | Details |\n|:----:|:---------------:| :----------------------:|\n"
                 fileID.write(pagediv)
