@@ -49,7 +49,7 @@ class Building:
             elif roll is 13:
                 self.details = "Home of ascetics"
             elif roll > 13 and roll <= 15:
-                self.details = "Abandeoned shrine"
+                self.details = "Abandoned shrine"
             elif roll > 15 and roll <= 17:
                 self.details = "Library dedicated to religious study"
             else:

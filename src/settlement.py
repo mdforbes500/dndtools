@@ -342,16 +342,16 @@ class Settlement:
         fileID.write(printblk)
         header = "<div class='wide'>\n##### Building List\n| Number | Building Type | Details |\n|:----:|:---------------:| :----------------------:|\n"
         fileID.write(header)
-        start = 1
+        start = 0
         final = 44
         pageindex = floor(len(self.buildings)/45)+1
         for j in range(pageindex):
             for i in range((j)*44+start, (j)*44+final):
                 if i >= len(self.buildings):
                     break
-                strout = "| " + str(i) + " | " + self.buildings[i].type + " | " + self.buildings[i].details + " |\n"
+                strout = "| " + str(i+1) + " | " + self.buildings[i].type + " | " + self.buildings[i].details + " |\n"
                 fileID.write(strout)
-            if j < pageindex:
+            if j < (pageindex-1):
                 pagediv = "</div>\n\n\\page\n\n<div class='wide'>\n| Number | Building Type | Details |\n|:----:|:---------------:| :----------------------:|\n"
                 fileID.write(pagediv)
         footer = "</div>"

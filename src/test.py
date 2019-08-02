@@ -17,6 +17,6 @@ print(test.knownfor)
 print(test.calamity)
 for i in range(len(test.buildings)):
     print(test.buildings[i])
-print(test.npcs)
+#print(test.npcs)
 print(len(test.buildings))
 test.buildingwrt("test.txt")

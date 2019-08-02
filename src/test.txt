@@ -8,49 +8,50 @@
 ##### Building List
 | Number | Building Type | Details |
 |:----:|:---------------:| :----------------------:|
-| 1 | Warehouse | Secret smuggler's den |
-| 2 | Shop | Chandler |
-| 3 | Shop | Books |
-| 4 | Residence | Crowded tenement |
-| 5 | Residence | Middle-class home |
-| 6 | Shop | Mapmaker |
-| 7 | Residence | Orphanage |
-| 8 | Shop | Moneylender |
-| 9 | Shop | Books |
-| 10 | Tavern: The Staggering Wolf | Thieves' guild hangout |
-| 11 | Tavern: The Gleaming Mountain | Quiet, low-key bar |
-| 12 | Warehouse | Live animals |
-| 13 | Religious building | Hidden shrine to a fiend or evil deity |
-| 14 | Religious building | Temple to a false deity (run by charlatan priests |
-| 15 | Residence | Upper-class home |
-| 16 | Religious building | Temple to a good or neutral deity |
-| 17 | Shop | Smithy |
-| 18 | Tavern: The Wandering Rose | Brothel |
-| 19 | Residence | Middle-class home |
-| 20 | Residence | Crowded tenement |
-| 21 | Residence | Crowded tenement |
-| 22 | Tavern: The Running Mountain | Raucous dive |
-| 23 | Residence | Crowded tenement |
-| 24 | Residence | Hidden slaver's den |
-| 25 | Tavern: The Running Goat | Raucous dive |
-| 26 | Residence | Middle-class home |
-| 27 | Residence | Orphanage |
-| 28 | Religious building | Temple to a good or neutral deity |
-| 29 | Residence | Orphanage |
-| 30 | Residence | Middle-class home |
-| 31 | Residence | Crowded tenement |
-| 32 | Religious building | Temple to a good or neutral deity |
+| 1 | Residence | Orphanage |
+| 2 | Religious building | Abandeoned shrine |
+| 3 | Residence | Crowded tenement |
+| 4 | Residence | Middle-class home |
+| 5 | Residence | Crowded tenement |
+| 6 | Residence | Middle-class home |
+| 7 | Residence | Middle-class home |
+| 8 | Shop | Fruits/vegetables |
+| 9 | Warehouse | Cheap goods |
+| 10 | Shop | Herbs/incense |
+| 11 | Warehouse | Goods from a distant land |
+| 12 | Shop | Pottery |
+| 13 | Warehouse | Empty or abandoned |
+| 14 | Tavern: The Staggering Pegasus | Quiet, low-key bar |
+| 15 | Residence | Abandoned Squat |
+| 16 | Residence | Abandoned Squat |
+| 17 | Warehouse | Bulk goods |
+| 18 | Warehouse | Secret smuggler's den |
+| 19 | Religious building | Temple to a good or neutral deity |
+| 20 | Residence | Middle-class home |
+| 21 | Residence | Abandoned Squat |
+| 22 | Warehouse | Weapons/armor |
+| 23 | Residence | Middle-class home |
+| 24 | Warehouse | Secret smuggler's den |
+| 25 | Tavern: The Staggering Goat | Brothel |
+| 26 | Residence | Abandoned Squat |
+| 27 | Residence | Crowded tenement |
+| 28 | Residence | Middle-class home |
+| 29 | Shop | Herbs/incense |
+| 30 | Shop | Ropemaker |
+| 31 | Tavern: The Leaping Pony | Brothel |
+| 32 | Residence | Crowded tenement |
 | 33 | Residence | Crowded tenement |
-| 34 | Residence | Abandoned Squat |
-| 35 | Warehouse | Goods from a distant land |
-| 36 | Tavern: The Leaping Horde | Upper-class dining club |
-| 37 | Residence | Middle-class home |
-| 38 | Residence | Crowded tenement |
-| 39 | Residence | Front for a secret cult |
-| 40 | Residence | Middle-class home |
-| 41 | Residence | Hidden slaver's den |
-| 42 | Tavern: The Frowning Mountain | Brothel |
-| 43 | Residence | Hidden slaver's den |
+| 34 | Tavern: The Drunken Dog | Raucous dive |
+| 35 | Religious building | Temple to a good or neutral deity |
+| 36 | Shop | Dried meats |
+| 37 | Residence | Crowded tenement |
+| 38 | Shop | Pottery |
+| 39 | Shop | Weaver |
+| 40 | Residence | Upper-class home |
+| 41 | Warehouse | Secret smuggler's den |
+| 42 | Residence | Crowded tenement |
+| 43 | Shop | Smithy |
+| 44 | Residence | Crowded tenement |
 </div>
 
 \page
@@ -58,25 +59,50 @@
 <div class='wide'>
 | Number | Building Type | Details |
 |:----:|:---------------:| :----------------------:|
-| 45 | Shop | Herbs/incense |
-| 46 | Residence | Crowded tenement |
-| 47 | Religious building | Temple to a good or neutral deity |
-| 48 | Residence | Lavish, guarded mansion |
-| 49 | Religious building | Temple to a good or neutral deity |
-| 50 | Residence | Upper-class home |
-| 51 | Residence | Abandoned Squat |
-| 52 | Residence | Middle-class home |
+| 45 | Residence | Middle-class home |
+| 46 | Residence | Middle-class home |
+| 47 | Shop | Books |
+| 48 | Residence | Orphanage |
+| 49 | Tavern: The Gleaming Goat | Gambling den |
+| 50 | Residence | Abandoned Squat |
+| 51 | Residence | Crowded tenement |
+| 52 | Shop | Weaver |
 | 53 | Residence | Middle-class home |
-| 54 | Warehouse | Empty or abandoned |
-| 55 | Religious building | Library dedicated to religious study |
-| 56 | Residence | Orphanage |
-| 57 | Residence | Abandoned Squat |
-| 58 | Residence | Middle-class home |
-| 59 | Residence | Middle-class home |
-| 60 | Residence | Upper-class home |
-| 61 | Religious building | Temple to a good or neutral deity |
-| 62 | Shop | Smithy |
-| 63 | Residence | Crowded tenement |
+| 54 | Residence | Orphanage |
+| 55 | Residence | Upper-class home |
+| 56 | Religious building | Abandeoned shrine |
+| 57 | Shop | Ropemaker |
+| 58 | Residence | Abandoned Squat |
+| 59 | Residence | Orphanage |
+| 60 | Religious building | Temple to a good or neutral deity |
+| 61 | Residence | Crowded tenement |
+| 62 | Tavern: The Howling Dolphin | Caters to specific race or guild |
+| 63 | Residence | Middle-class home |
+| 64 | Shop | Tailor |
+| 65 | Residence | Lavish, guarded mansion |
+| 66 | Residence | Middle-class home |
+| 67 | Shop | Carpenter |
+| 68 | Tavern: The Black Dwarf | Brothel |
+| 69 | Residence | Upper-class home |
+| 70 | Residence | Crowded tenement |
+| 71 | Residence | Abandoned Squat |
+| 72 | Residence | Middle-class home |
+| 73 | Shop | Moneylender |
+| 74 | Shop | Jeweler |
+| 75 | Shop | Tailor |
+| 76 | Residence | Orphanage |
+| 77 | Residence | Orphanage |
+| 78 | Religious building | Temple to a good or neutral deity |
+| 79 | Religious building | Library dedicated to religious study |
+| 80 | Warehouse | Cheap goods |
+| 81 | Religious building | Library dedicated to religious study |
+| 82 | Residence | Front for a secret cult |
+| 83 | Shop | Pottery |
+| 84 | Residence | Middle-class home |
+| 85 | Residence | Crowded tenement |
+| 86 | Residence | Hidden slaver's den |
+| 87 | Tavern: The Howling Eel | Brothel |
+| 88 | Residence | Abandoned Squat |
 </div>
 
 \page
@@ -84,4 +110,8 @@
 <div class='wide'>
 | Number | Building Type | Details |
 |:----:|:---------------:| :----------------------:|
+| 89 | Religious building | Abandeoned shrine |
+| 90 | Tavern: The Leaping Dolphin | Quiet, low-key bar |
+| 91 | Residence | Crowded tenement |
+| 92 | Residence | Abandoned Squat |
 </div>
