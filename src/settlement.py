@@ -405,6 +405,62 @@ class Settlement:
         for i in range(numbldgs):
             self.buildings.append(bldg.Building())
 
+    def set_npcs(self):
+        # Determine community modifiers
+        reroll = 0
+        if self.size is "Thorp":
+            mod = -3
+        elif self.size is "Hamlet":
+            mod = -2
+        elif self.size is "Village":
+            mod = -1
+        elif self.size is "Small Town":
+            mod = 0
+        elif self.size is "Large Town":
+            mod = 3
+        elif self.size is "Small City":
+            mod = 6
+            reroll = 1
+        elif self.size is "Large City":
+            mod = 9
+            reroll = 3
+        else:
+            mod = 12
+            reroll = 4
+
+        # Determine highest level NPCs
+        adepts = [random.randint(1,6) + mod]
+        
+        hl_aristocrat = random.randint(1,4) + mod
+        hl_barbarian = random.randint(1,4) + mod
+        hl_bard = random.randint(1,6) + mod
+        hl_cleric = random.randint(1,6) + mod
+        hl_commoner = random.randint(4,16) + mod
+        if self.size is "Thorp" or self.size is "Hamlet":
+            roll = random.randint(1, 100)
+            if roll >= 96:
+                hl_druid = random.randint(1,6) + mod + 10
+            else:
+                hl_druid = random.randint(1,6) + mod
+        else:
+            hl_druid = random.randint(1,6) + mod
+        hl_expert = random.randint(3,12) + mod
+        hl_fighter = random.randint(1,8) + mod
+        hl_monk = random.randint(1,4) + mod
+        hl_paladin = random.randint(1,3) + mod
+        if self.size is "Thorp" or self.size is "Hamlet":
+            roll = random.randint(1, 100)
+            if roll >= 96:
+                hl_ranger = random.randint(1,3) + mod + 10
+            else:
+                hl_ranger = random.randint(1,3) + mod
+        else:
+            hl_ranger = random.randint(1,3) + mod
+        hl_rogue = random.randint(1,8) + mod
+        hl_sorcerer = random.randint(1,4) + mod
+        hl_warrior = random.randint(2,8) + mod
+        hl_wizard = random.randint(1,4) + mod
+
     def buildingwrt(self, fh):
         """
         """
