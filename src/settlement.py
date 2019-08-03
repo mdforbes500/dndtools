@@ -6,81 +6,118 @@ from math import floor
 
 class Settlement:
     """
-
+    Settlement class creates a D&D settlement based upon integer RNGs.
     """
-    def __init__(self, name):
+
+    def __init__(self, name, type):
         """
+        Constructor for Settlement class. All values are empty prior to
+        mutation by associated methods. Takes two inputs: the name as a string,
+        and the type as a string.
         """
         self.name = name
+        self.type = type
 
         #Statistics
-        self.size = ""
-        self.population = ""
+        self.size = None
+        self.population = None
 
         # Commerce
-        self.gplimit = 0
-        self.wealth = ""
+        self.gplimit = None
+        self.wealth = None
 
         # Politics
-        self.powerctrs = []
-        self.government = ""
-        self.relations = ""
-        self.status = ""
+        self.powermod = None
+        self.powerctrs = None
+        self.government = None
+        self.relations = None
+        self.status = None
 
         # Details
-        self.traits = ""
-        self.knownfor = ""
-        self.calamity = ""
-        self.buildings = []
-        self.npcs = []
+        self.traits = None
+        self.knownfor = None
+        self.calamity = None
+        self.buildings = None
+        self.npcs = None
 
-        # Determine size and associated statistics
+        # Populate & parse
+        self.set_size()
+        self.set_powerctrs()
+        self.set_government()
+        self.set_relations()
+        self.set_status()
+        self.set_traits()
+        self.set_knownfor()
+        self.set_calamity()
+        self.set_buildings()
+
+    # Determine size and associated statistics
+    def set_size(self):
+        """
+        Set_size is a mutator method for the Settlement Class that randomly
+        generates a settlement of various size based on RNG integer values.
+        In addition, it gives ome related statistics of population, gold piece
+        limit for the community, and a modifier for power center generation.
+        Finally, it generates the wealth of the community in gold pieces and
+        stores it.
+        """
+        # Roll a d100
         roll = random.randint(1, 100)
+
+        # Table 5-2 for Human Settlements, DMG1 (3.5e), pg. 137
         if roll <= 10:
             self.size = "Thorp"
             self.population = random.randint(20, 80)
             self.gplimit = 40    #gp
-            powermod = -1
+            self.powermod = -1
         elif roll > 10 and roll <= 30:
             self.size = "Hamlet"
             self.population = random.randint(81, 400)
             self.gplimit = 100   #gp
-            powermod = 0
+            self.powermod = 0
         elif roll > 30 and roll <= 50:
             self.size = "Village"
             self.population = random.randint(401, 900)
             self.gplimit = 200   #gp
-            powermod = 1
+            self.powermod = 1
         elif roll > 50 and roll <= 70:
             self.size = "Small Town"
             self.population = random.randint(901, 2000)
             self.gplimit = 200   #gp
-            powermod = 2
+            self.powermod = 2
         elif roll > 70 and roll <= 85:
             self.size = "Large Town"
             self.population = random.randint(2001, 5000)
             self.gplimit = 800   #gp
-            powermod = 3
+            self.powermod = 3
         elif roll > 85 and roll <= 95:
             self.size = "Small City"
             self.population = random.randint(5001, 12000)
             self.gplimit = 15000   #gp
-            powermod = 4
+            self.powermod = 4
         elif roll > 95 and roll <= 99:
             self.size = "Large City"
             self.population = random.randint(12001, 25000)
             self.gplimit = 40000   #gp
-            powermod = 5
+            self.powermod = 5
         else:
             self.size = "Metropolis"
             self.population = random.randint(25001, 1000000)
             self.gplimit = 100000  #gp
-            powermod = 6
+            self.powermod = 6
 
-        # Determine community wealth on hand
+        # Determine community wealth on hand, DMG1 (3.5e) pg. 137
         self.wealth = 0.5*self.gplimit + 0.1*self.population
 
-        # Determine power centers
+    def set_powerctrs(self):
+        """
+        Set_powerctrs is a mutator method for the Settlement class. Determines
+        a multi-dimensional array of power centers for the city, with associated
+        alignments.
+        """
+        self.powerctrs = []
+
+        # Determine number of power centers, DMG1 (3.5e) pg. 137
         if self.size is "Small City":
             rerolls = 2
         elif self.size is "Large City":
@@ -90,9 +127,9 @@ class Settlement:
         else:
             rerolls = 1
 
-        # Power Center Types
+        # Power Center Types, DMG1 (3.5e) pg. 137
         for i in range(rerolls):
-            roll = random.randint(1, 20) + powermod
+            roll = random.randint(1, 20) + self.powermod
             if roll <= 13:
                 self.powerctrs.append(["Conventional"])
                 mroll = random.randint(1, 100)
@@ -103,11 +140,37 @@ class Settlement:
             else:
                 self.powerctrs.append(["Magical"])
 
-        # Power Center Alignments
-        # ADD TABLE
+        # Power Center Alignments, DMG1 (3.5e) pg. 138
+        for i in range(len(self.powerctrs)):
+            roll = random.randint(1,100)
+            if roll <= 35:
+                self.powerctrs[i].append("Lawful good")
+            elif roll >36 and roll <= 39:
+                self.powerctrs[i].append("Neutral good")
+            elif roll >40 and roll <= 41:
+                self.powerctrs[i].append("Chaotic good")
+            elif roll >42 and roll <= 61:
+                self.powerctrs[i].append("Lawful neutral")
+            elif roll >62 and roll <= 63:
+                self.powerctrs[i].append("Neutral")
+            elif roll is 64:
+                self.powerctrs[i].append("Chaotic Neutral")
+            elif roll >65 and roll <= 90:
+                self.powerctrs[i].append("Lawful evil")
+            elif roll >91 and roll <= 98:
+                self.powerctrs[i].append("Neutral evil")
+            else:
+                self.powerctrs[i].append("Chaotic evil")
 
-        # Determine government
+    def set_government(self):
+        """
+        Set_government is a mutator method for the Settlement class. Determines
+        the government of the settlement by integer RNG.
+        """
+        # Roll d100
         roll = random.randint(1, 100)
+
+        # Forms of Government, DMG (5e) pg. 18
         if roll <= 8:
             self.government = "Autocracy"
         elif roll > 8 and roll <= 13:
@@ -149,6 +212,7 @@ class Settlement:
         else:
             self.government = "Theocracy"
 
+    def set_relations(self):
         # Determine racial relations
         roll = random.randint(1, 20)
         if roll <= 10:
@@ -166,6 +230,7 @@ class Settlement:
         else:
             self.relations = "Racial minority oppresses majority"
 
+    def set_status(self):
         # Determine ruler's status
         roll = random.randint(1, 20)
         if roll <= 5:
@@ -193,6 +258,7 @@ class Settlement:
         else:
             self.status = "Religious leader"
 
+    def set_traits(self):
         # Determine noteable traits
         roll = random.randint(1, 20)
         if roll is 1:
@@ -236,6 +302,7 @@ class Settlement:
         else:
             self.traits = "Built atop ancient ruins"
 
+    def set_knownfor(self):
         # Determine what it is known for...
         roll = random.randint(1, 20)
         if roll is 1:
@@ -279,6 +346,7 @@ class Settlement:
         else:
             self.knownfor = "Patriotism"
 
+    def set_calamity(self):
         # Determine current calamity
         roll = random.randint(1, 20)
         if roll is 1:
@@ -318,7 +386,10 @@ class Settlement:
         else:
             self.calamity = "Religious sects struggle for power"
 
+    def set_buildings(self):
         # Determine number of buildings
+        self.buildings = []
+
         roll = random.randint(1, 100)
         if roll <= 25:
             # Crowded

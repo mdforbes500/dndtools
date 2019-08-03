@@ -2,8 +2,9 @@
 
 import settlement as set
 
-test = set.Settlement("Test")
+test = set.Settlement("Test", "human")
 print(test.name)
+print(test.type)
 print(test.size)
 print(test.population)
 print(test.gplimit)
@@ -15,8 +16,8 @@ print(test.status)
 print(test.traits)
 print(test.knownfor)
 print(test.calamity)
-for i in range(len(test.buildings)):
-    print(test.buildings[i])
+#for i in range(len(test.buildings)):
+#    print(test.buildings[i])
 #print(test.npcs)
 print(len(test.buildings))
 test.buildingwrt("test.txt")
