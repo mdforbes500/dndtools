@@ -4,6 +4,15 @@ import building as bldg
 import random
 from math import floor
 
+def multiply_npcs(list):
+    index = 0
+    while True:
+        if floor(list[index]/2) < 1:
+            break
+        list.extend([floor(list[index]/2)]*floor(list[index]/2))
+        index += 1
+    return list
+
 class Settlement:
     """
     Settlement class creates a D&D settlement based upon integer RNGs.
@@ -50,6 +59,7 @@ class Settlement:
         self.set_knownfor()
         self.set_calamity()
         self.set_buildings()
+        self.set_npcs()
 
     # Determine size and associated statistics
     def set_size(self):
@@ -428,38 +438,69 @@ class Settlement:
             mod = 12
             reroll = 4
 
-        # Determine highest level NPCs
+        # Determine highest level NPCs & multiply based on NPC level
         adepts = [random.randint(1,6) + mod]
-        
-        hl_aristocrat = random.randint(1,4) + mod
-        hl_barbarian = random.randint(1,4) + mod
-        hl_bard = random.randint(1,6) + mod
-        hl_cleric = random.randint(1,6) + mod
-        hl_commoner = random.randint(4,16) + mod
+        adepts = multiply_npcs(adepts)
+        print(adepts)
+
+        aristocrats = [random.randint(1,4) + mod]
+        aristocrats = multiply_npcs(aristocrats)
+
+        barbarians = [random.randint(1,4) + mod]
+        barbarians = multiply_npcs(barbarians)
+
+        bards = [random.randint(1,6) + mod]
+        bards = multiply_npcs(bards)
+
+        clerics = [random.randint(1,6) + mod]
+        clerics = multiply_npcs(clerics)
+
+        commoners = [random.randint(4,16) + mod]
+        commoners = multiply_npcs(commoners)
+
         if self.size is "Thorp" or self.size is "Hamlet":
             roll = random.randint(1, 100)
             if roll >= 96:
-                hl_druid = random.randint(1,6) + mod + 10
+                druids = [random.randint(1,6) + mod + 10]
             else:
-                hl_druid = random.randint(1,6) + mod
+                druids = [random.randint(1,6) + mod]
         else:
-            hl_druid = random.randint(1,6) + mod
-        hl_expert = random.randint(3,12) + mod
-        hl_fighter = random.randint(1,8) + mod
-        hl_monk = random.randint(1,4) + mod
-        hl_paladin = random.randint(1,3) + mod
+            druids = [random.randint(1,6) + mod]
+        druids = multiply_npcs(druids)
+
+        experts = [random.randint(3,12) + mod]
+        experts = multiply_npcs(experts)
+
+        fighters = [random.randint(1,8) + mod]
+        fighters = multiply_npcs(fighters)
+
+        monks = [random.randint(1,4) + mod]
+        monks = multiply_npcs(monks)
+
+        paladins = [random.randint(1,3) + mod]
+        paladins = multiply_npcs(paladins)
+
         if self.size is "Thorp" or self.size is "Hamlet":
             roll = random.randint(1, 100)
             if roll >= 96:
-                hl_ranger = random.randint(1,3) + mod + 10
+                rangers = [random.randint(1,3) + mod + 10]
             else:
-                hl_ranger = random.randint(1,3) + mod
+                rangers = [random.randint(1,3) + mod]
         else:
-            hl_ranger = random.randint(1,3) + mod
-        hl_rogue = random.randint(1,8) + mod
-        hl_sorcerer = random.randint(1,4) + mod
-        hl_warrior = random.randint(2,8) + mod
-        hl_wizard = random.randint(1,4) + mod
+            rangers = [random.randint(1,3) + mod]
+        rangers = multiply_npcs(rangers)
+
+        rogues = [random.randint(1,8) + mod]
+        rogues = multiply_npcs(rogues)
+
+        sorcerers = [random.randint(1,4) + mod]
+        sorcerers = multiply_npcs(sorcerers)
+
+        warriors = [random.randint(2,8) + mod]
+        warriors = multiply_npcs(warriors)
+
+        wizards = [random.randint(1,4) + mod]
+        wizards = multiply_npcs(wizards)
 
     def buildingwrt(self, fh):
         """

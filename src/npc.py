@@ -21,8 +21,9 @@ class NPC:
         self.abilities = [10,10,10,10,10,10]
         self.modifiers = [0,0,0,0,0,0]
         self.proficiency = 2
-        self.armor = "            <li><strong>Armor Class</strong> 10</li>\n"
-        self.hp = "            <li><strong>Hit Points</strong> 1 (1d6)</li>\n"
+        self.armor = 10
+        self.hp = 1
+        self.dicecode = "1d6"
         self.skills = {'Medicine':4}
         self.senses = ["passive Perception 10"]
         self.languages = ["Common"]
@@ -64,7 +65,7 @@ class NPC:
     def get_alignment(self):
         return str(self.alignment)
 
-    def get_ability_score(self, ability):
+    def get_ability(self, ability):
         ability = str(ability)
         if ability == "STR":
             score = self.abilities[0]
@@ -111,6 +112,9 @@ class NPC:
 
     def get_hp(self):
         return self.hp
+
+    def get_dicecode(self):
+        return str(self.dicecode)
 
     def get_feature(self, feature):
         feature = str(feature)
@@ -286,7 +290,7 @@ class NPC:
                     armor = item.ac
             else:
                 print("Item is not armor.")
-        self.armor = "            <li><strong>Armor Class</strong> {0}</li>\n".format(armor)
+        self.armor = armor
 
     def update_dicecode(self):
         cr = self.cr
@@ -428,104 +432,49 @@ class NPC:
                 break
             num_dice = num_dice + 1
 
-        dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
-        hit_points = int(num_dice*avg_hp + self.modifiers[2])
-        self.hp = "            <li><strong>Hit Points</strong> {0} {1}</li>\n".format(hit_points, dice_code)
+        self.dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
+        self.hp = int(num_dice*avg_hp + self.modifiers[2])
 
-    #Print method
+    def export_json(self):
+        dict = {
+            "name": self.get_name(),
+            "cr": self.get_rating(),
+            "size": self.get_size(),
+            "type": self.get_type(),
+            "race": self.get_race(),
+            "alignment": self.get_alignment(),
+            "speed": self.get_speed(),
+            "abilities": [
+                {"strength": self.get_ability("STR"), "modifier": self.modifier("STR")},
+                {"dexterity": self.get_ability("DEX"), "modifier": self.modifier("DEX")},
+                {"constitution": self.get_ability("CON"), "modifier": self.modifier("CON")},
+                {"intelligence": self.get_ability("INT"), "modifier": self.modifier("INT")},
+                {"wisdom": self.get_ability("WIS"), "modifier": self.modifier("WIS")},
+                {"charisma": self.get_ability("CHA"), "modifier": self.modifier("CHA")}
+            ],
+            "proficiency": self.get_proficiency(),
+            "armor": self.get_armor(),
+            "hp": self.get_hp(),
+            "dicecode": self.get_dicecode(),
+            "skills": self.get_skills();
+            self.senses = ["passive Perception 10"]
+            self.languages = ["Common"]
+            self.features = {}
+            self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
+            self.items = {}
+            self.cast_level = 1
+            self.caster = True
+            self.cast_ability = "Wisdom"
+            self.cast_save = 12
+            self.spell_attk = 4
+            self.spell_list = "cleric"
+            self.spells = [['light','sacred flame','thaumaturgy'],['bless','cure wounds','sanctuary']]
+            self.slots = [0,3]
+        }
+
     def __str__(self):
-        header = "\
-<head>\n\
-   <link rel=\"stylesheet\" href=\"CSS/phb.css\" />\n\
-   <style>\n\
-      .phb{ background : white;}\n\
-      .phb img{ display : none;}\n\
-      .phb hr+blockquote{background : white;}\n\
-   </style>\n\
-</head>\n\n"
-
-        body="\
-<body>\n\
-   <div class = 'phb'>\n\
-      <hr>\n\
-      <blockquote>\n\
-         <h2 id=\"{0}\">{0}</h2>\n\
-         <p><em>{1} {2}{3}, {4}</em></p>\n\
-         <hr>\n\
-         <ul>\n".format(self.name, self.size, self.type, self.race, self.alignment)
-
-        armor = self.armor
-
-        hit_points = self.hp
-
-        speed = "            <li><strong>Speed</strong> {0} ft.</li>\n         </ul>\n".format(self.speed)
-
-        abilities="\
-         <hr>\n\
-         <table>\n\
-            <thead>\n\
-               <tr>\n\
-                  <th style=\"text-align:center\">STR</th>\n\
-                  <th style=\"text-align:center\">DEX</th>\n\
-                  <th style=\"text-align:center\">CON</th>\n\
-                  <th style=\"text-align:center\">INT</th>\n\
-                  <th style=\"text-align:center\">WIS</th>\n\
-                  <th style=\"text-align:center\">CHA</th>\n\
-                </tr>\n\
-            </thead>\n\
-            <tbody>\n\
-               <tr>\n"
-        for index in range(6):
-            abilities+="\
-                  <td style=\"text-align:center\">{0} ({1})</td>\n".format(self.abilities[index], self.modifiers[index])
-        abilities+="               </tr>\n            </tbody>\n            </table>\n"
-
-        skills ="            <hr>\n            <ul>\n               <li><strong>Skills</strong>"
-        for skill in self.skills:
-            skills += "{0} {1}".format(skill, self.skills[skill])
-        skills +="</li>\n"
-
-        senses ="               <li><strong>Senses</strong>"
-        for sense in self.senses:
-            senses +="{0} ".format(sense)
-        senses+="</li>\n"
-
-        languages ="               <li><strong>Languages</strong>"
-        for language in self.languages:
-                languages+="{0}".format(language)
-        languages+="</li>\n"
-
-        challenge ="               <li><strong>Challenge</strong>{0}</li>\n\
-            </ul>\n\
-            <hr>\n".format(int(self.cr))
-
-        if self.caster == True:
-            spells ="            <p><strong><em>Spellcasting</em></strong>. "
-            spells+= "{0} is a {1}-level spellcaster. ".format(self.name, self.cast_level)
-            spells+= "Its spellcasting ability is {0} (spell save DC {1}, {2} to hit with spell attacks). ".format(self.cast_ability, self.cast_save, self.spell_attk)
-            spells+= "{0} has the following {1} spells prepared:</p>\n".format(self.name, self.spell_list)
-            for index in range(len(self.spells)):
-                if index == 0:
-                    spells+="\
-            <p>Cantrips (at will): <em>"
-                    for spell in self.spells[index]:
-                        spells+="{0} ".format(spell)
-                    spells+="</em></p>\n"
-                if index > 0:
-                    spells+="\
-            <p>{0} level ({1} slots): <em>".format(index,self.slots[index])
-                    for spell in self.spells[index]:
-                        spells+="{0} ".format(spell)
-                    spells+="</em></p>\n"
-        else:
-            spells = ""
-
-        actions ="            <h3 id=\"actions\">Actions</h3>\n"
-        for action in self.actions:
-            actions+="\
-            <p><strong><em>{0}.</em></strong> <em>{1} Weapon Attack:</em> +{2} to hit, reach {3}ft., {4} target. ".format(action, self.actions[action][0], self.actions[action][1], self.actions[action][2], self.actions[action][3])
-            actions+="<em>Hit</em>{0} {1} damage.</p>\n".format(self.actions[action][4], self.actions[action][5])
-        actions+="      </blockquote>\n      <div class='pageNumber auto'></div>\n   </div>\n</body>"
-
-        block = header + body + self.armor + hit_points + speed + abilities + skills + senses + languages + challenge + spells + actions
-        return block
+        output = ("Name: " + self.get_name() + "\n"
+        + self.get_size() + " " + self.get_type() + self.get_race() + "\n"
+        + "Proficiency: " + self.get_proficiency() + "\n"
+        + "CR: " + self.get_rating() + "\n")
+        return output
