@@ -8,10 +8,14 @@ import json
 
 class NPC:
     """
-    NPC: Contains methods for modifying basic stat block to create a new
-    non-player character.
+    NPC: Contains a model of an NPC's basic statistics necessary for generating
+    a stat block for it.
     """
     def __init__(self, name):
+        """
+        Constructor for NPC. Populates the character as a Commoner. Is modified
+        for any other template at any challenge rating.
+        """
         self.name = str(name)
         self.cr = 0
         self.size = "Medium"
@@ -30,29 +34,32 @@ class NPC:
         self.languages = ["Common"]
         self.features = {}
         self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
-        self.items = {}
-        self.cast_level = 1
-        self.caster = True
-        self.cast_ability = "Wisdom"
-        self.cast_save = 12
-        self.spell_attk = 4
-        self.spell_list = "cleric"
+        self.inventory = {}
+        self.cast_level = 0
+        self.caster = False
+        self.cast_ability = ""
+        self.cast_save = 0
+        self.spell_attk = 0
+        self.spell_list = ""
         self.spells = [['light','sacred flame','thaumaturgy'],['bless','cure wounds','sanctuary']]
         self.slots = [0,3]
+
+    def __del__(self):
+        return None;
 
     #Accessor methods
     def get_name(self):
         return str(self.name)
 
     def get_rating(self):
-        if self.cr == 0.125:
+        if int(self.cr) == 0.125:
             return "1/8"
-        elif self.cr == 0.25:
+        elif int(self.cr) == 0.25:
             return "1/4"
-        elif self.cr == 0.5:
+        elif int(self.cr) == 0.5:
             return "1/2"
         else:
-            return "{0:.0f}".format(self.cr)
+            return "{0:.0f}".format(int(self.cr))
 
     def get_size(self):
         return str(self.size)
@@ -84,7 +91,7 @@ class NPC:
         elif ability == "CHA":
             score = self.abilities[5]
         else:
-            print("INPUT ERROR: Not a recognized ability tag!")
+            raise Exception("Not a recognized ability tag")
             return None
         return int(score)
 
@@ -103,7 +110,7 @@ class NPC:
         elif ability == "CHA":
             modifier = self.modifiers[5]
         else:
-            print("INPUT ERROR: Not a recognized ability tag!")
+            raise Exception("Not a recognized ability tag")
             return None
         return int(modifier)
 
@@ -134,8 +141,8 @@ class NPC:
     def get_actions(self):
         return self.actions
 
-    def get_items(self):
-        return self.items
+    def get_inventory(self):
+        return self.inventory
 
     def get_casterlevel(self):
         return int(self.cast_level)
@@ -156,7 +163,7 @@ class NPC:
         return str(self.spell_list)
 
     def get_spells(self):
-        return self.spell_list
+        return self.spells
 
     def get_slots(self):
         return self.slots
@@ -265,7 +272,7 @@ class NPC:
             print("INPUT ERROR: Invalid score range!")
             print("Please choose a value between 1 and 30.")
 
-    def update_modifiers(self):
+    def set_modifiers(self):
         for index, modifer in enumerate(self.modifiers):
             modifer = (self.abilities[index] - 10)//2
             self.modifiers[index] = modifier
@@ -295,8 +302,8 @@ class NPC:
         else:
             self.proficiency = 9
 
-    def add_item(self, item):
-        self.items[item.get_name()] = item
+    def set_inventory(self, item):
+        self.inventory[item.get_name()] = item
 
     def equip(self, item):
         if item.type == "armor" and item.isequipped == False:
@@ -468,6 +475,7 @@ class NPC:
         self.dice_code = "({0}d{1}+{2})".format(num_dice, sizemod, self.get_modifier("CON"))
         self.hp = int(num_dice*avg_hp + self.modifiers[2])
 
+    #Export methods
     def export_json(self):
         dict = {
             "name": self.get_name(),
@@ -508,9 +516,10 @@ class NPC:
         exported_json = json.dumps(dict, sort_keys=True, indent=4)
         print(exported_json)
 
-    def __str__(self):
+"""    def __str__(self):
         output = ("Name: " + self.get_name() + "\n"
         + self.get_size() + " " + self.get_type() + self.get_race() + "\n"
         + "Proficiency: " + self.get_proficiency() + "\n"
         + "CR: " + self.get_rating() + "\n")
         return output
+"""
