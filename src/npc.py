@@ -4,6 +4,7 @@ import item
 import armor
 import random
 import math
+import json
 
 class NPC:
     """
@@ -456,21 +457,23 @@ class NPC:
             "armor": self.get_armor(),
             "hp": self.get_hp(),
             "dicecode": self.get_dicecode(),
-            "skills": self.get_skills();
-            self.senses = ["passive Perception 10"]
-            self.languages = ["Common"]
-            self.features = {}
-            self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
-            self.items = {}
-            self.cast_level = 1
-            self.caster = True
-            self.cast_ability = "Wisdom"
-            self.cast_save = 12
-            self.spell_attk = 4
-            self.spell_list = "cleric"
-            self.spells = [['light','sacred flame','thaumaturgy'],['bless','cure wounds','sanctuary']]
-            self.slots = [0,3]
+            "skills": self.get_skills(),
+            "senses": self.get_senses(),
+            "languages": self.get_languages(),
+            "features": self.get_features(),
+            "actions": self.get_actions(),
+            "items": self.get_items(),
+            "cast_level": self.get_casterlevel(),
+            "caster": self.get_if_caster(),
+            "cast_ability": self.get_cast_ability(),
+            "cast_save": self.get_cast_saving_throw(),
+            "spell_attk": self.get_spell_attk(),
+            "spell_list": self.get_spell_list(),
+            "spells": self.get_spells(),
+            "slots": self.get_slots()
         }
+
+        exported_json = json.dumps(dict)
 
     def __str__(self):
         output = ("Name: " + self.get_name() + "\n"
