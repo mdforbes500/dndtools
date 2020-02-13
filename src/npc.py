@@ -66,6 +66,9 @@ class NPC:
     def get_alignment(self):
         return str(self.alignment)
 
+    def get_speed(self):
+        return int(self.speed)
+
     def get_ability(self, ability):
         ability = str(ability)
         if ability == "STR":
@@ -83,7 +86,7 @@ class NPC:
         else:
             print("INPUT ERROR: Not a recognized ability tag!")
             return None
-        return str(score)
+        return int(score)
 
     def get_modifier(self, ability):
         ability = str(ability)
@@ -102,32 +105,61 @@ class NPC:
         else:
             print("INPUT ERROR: Not a recognized ability tag!")
             return None
-        return str(modifier)
+        return int(modifier)
 
     def get_proficiency(self):
-        output = "+{0}".format(self.proficiency)
-        return output
+        return int(self.proficiency)
 
     def get_armor(self):
-        return self.armor
+        return int(self.armor)
 
     def get_hp(self):
-        return self.hp
+        return int(self.hp)
+
+    def get_skills(self):
+        return self.skills
 
     def get_dicecode(self):
         return str(self.dicecode)
 
-    def get_feature(self, feature):
-        feature = str(feature)
-        return self.features[feature]
+    def get_senses(self):
+        return self.senses
 
-    def get_action(self, action):
-        action = str(action)
-        return self.actions[action]
+    def get_languages(self):
+        return self.languages
 
-    def get_item(self, item):
-        item = str(item)
-        return self.items[item]
+    def get_features(self):
+        return self.features
+
+    def get_actions(self):
+        return self.actions
+
+    def get_items(self):
+        return self.items
+
+    def get_casterlevel(self):
+        return int(self.cast_level)
+
+    def get_if_caster(self):
+        return bool(self.caster)
+
+    def get_cast_ability(self):
+        return str(self.cast_ability)
+
+    def get_cast_saving_throw(self):
+        return int(self.cast_save)
+
+    def get_spell_attk(self):
+        return int(self.spell_attk)
+
+    def get_spell_list(self):
+        return str(self.spell_list)
+
+    def get_spells(self):
+        return self.spell_list
+
+    def get_slots(self):
+        return self.slots
 
     #Mutator methods
     def set_name(self, name):
@@ -446,12 +478,12 @@ class NPC:
             "alignment": self.get_alignment(),
             "speed": self.get_speed(),
             "abilities": [
-                {"strength": self.get_ability("STR"), "modifier": self.modifier("STR")},
-                {"dexterity": self.get_ability("DEX"), "modifier": self.modifier("DEX")},
-                {"constitution": self.get_ability("CON"), "modifier": self.modifier("CON")},
-                {"intelligence": self.get_ability("INT"), "modifier": self.modifier("INT")},
-                {"wisdom": self.get_ability("WIS"), "modifier": self.modifier("WIS")},
-                {"charisma": self.get_ability("CHA"), "modifier": self.modifier("CHA")}
+                {"strength": self.get_ability("STR"), "modifier": self.get_modifier("STR")},
+                {"dexterity": self.get_ability("DEX"), "modifier": self.get_modifier("DEX")},
+                {"constitution": self.get_ability("CON"), "modifier": self.get_modifier("CON")},
+                {"intelligence": self.get_ability("INT"), "modifier": self.get_modifier("INT")},
+                {"wisdom": self.get_ability("WIS"), "modifier": self.get_modifier("WIS")},
+                {"charisma": self.get_ability("CHA"), "modifier": self.get_modifier("CHA")}
             ],
             "proficiency": self.get_proficiency(),
             "armor": self.get_armor(),
@@ -473,7 +505,8 @@ class NPC:
             "slots": self.get_slots()
         }
 
-        exported_json = json.dumps(dict)
+        exported_json = json.dumps(dict, sort_keys=True, indent=4)
+        print(exported_json)
 
     def __str__(self):
         output = ("Name: " + self.get_name() + "\n"
