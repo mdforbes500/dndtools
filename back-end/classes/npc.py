@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
-import item
-import armor
+from . import item
+from . import armor
 import random
 import math
 import json

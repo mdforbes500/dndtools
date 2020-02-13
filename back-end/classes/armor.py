@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import item
+from . import item
 
 class Armor(item.Item):
 
