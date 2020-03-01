@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 import random
 
 def aarakocra(obj):
@@ -22,37 +21,42 @@ def drow(obj):
     obj.abilities[1] += 2 # +2 to Dex
     obj.abilities[5] += 1 # +1 to Cha
 
-def dwarf(obj):
+def hill_dwarf(obj):
     obj.race = "(dwarf)"
-    roll = random.randint(1, 100)
-    if roll >= 50:
-        obj.abilities[0] += 2 # +2 to Str
-    else:
-        obj.abilities[4] += 2 # +2 to Wis
+    obj.abilities[4] += 2 # +2 to Wis
     obj.abilities[2] += 2 # +2 to Con
 
-def elf(obj):
+def mountain_dwarf(obj):
+    obj.race = "(dwarf)"
+    obj.abilities[0] += 2 # +2 to Str
+    obj.abilities[2] += 2 # +2 to Con
+
+def wood_elf(obj):
     obj.race = "(elf)"
-    roll = random.randint(1, 100)
-    if roll >= 50:
-        obj.abilities[3] += 1 # +1 to Int
-    else:
-        obj.abilities[4] += 1 # +1 to Wis
+    obj.abilities[4] += 1 # +1 to Wis
     obj.abilities[1] += 2 # +2 to Dex
+
+def high_elf(obj):
+    obj.race = "(elf)"
+    obj.abilities[3] += 1 # +1 to Int
+    obj.abilities[1] += 2 # +2 to Dex
+
 
 def gnoll(obj):
     obj.race = "(gnoll)"
     obj.abilities[0] += 2 # +2 to Str
     obj.abilities[3] -= 2 # -2 to Int
 
-def gnome(obj):
+def rock_gnome(obj):
     obj.size = "Small"
     obj.race = "(gnome)"
-    roll = random.randint(1, 100)
-    if roll >= 50:
-        obj.abilities[1] += 2 # +2 to Dex
-    else:
-        obj.abilities[2] += 2 # +2 to Con
+    obj.abilities[2] += 2 # +2 to Con
+    obj.abilities[3] += 2 # +2 to Int
+
+def forest_gnome(obj):
+    obj.size = "Small"
+    obj.race = "(gnome)"
+    obj.abilities[1] += 2 # +2 to Dex
     obj.abilities[3] += 2 # +2 to Int
 
 
