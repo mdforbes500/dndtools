@@ -19,7 +19,7 @@ class NPC:
         self.type = "humanoid"
         self.race = "(human)"
         self.alignment = "neutral"
-        self.speed = 30
+        self.speed = {"ground": 30, "fly": 0, "swim": 0, "climb": 0}
         self.abilities = [10,10,10,10,10,10]
         self.modifiers = [0,0,0,0,0,0]
         self.proficiency = 2
@@ -30,7 +30,13 @@ class NPC:
         self.senses = ["passive Perception 10"]
         self.languages = ["Common"]
         self.features = {}
-        self.actions = {"Club":['Melee',2,5,1,'1d4','bludgeoning']}
+        self.actions = {
+            "Club":['Melee',
+                self.find_attk_mod(self.modifiers[0]),
+                5,
+                self.find_damage(4, self.modifers[0],
+                '1d4 + {}'.format(self.modifers[0]),
+                'bludgeoning']}
         self.inventory = {}
         self.cast_level = 0
         self.caster = False
@@ -45,6 +51,17 @@ class NPC:
         return None;
 
     #Methods
+    def find_attk_mod(self, mod):
+        attk_mod = self.prof + mod
+        return attk_mod
+
+    def find_damage(self, die, mod):
+        damage = sum(range(1, die+1))/die + mod
+        return damage
+
+    def find_cr(self):
+        pass
+
     def export_json(self):
         dict = {
             "name": self.name,

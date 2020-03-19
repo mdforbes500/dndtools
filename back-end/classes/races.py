@@ -1,10 +1,23 @@
 #!/usr/bin/python
 import random
 
-def aarakocra(obj):
+def aarakocra(obj: NPC): -> None
+    """
+    Takes an NPC template and alters it to have the racial abilities given in
+    the DM's Guide.
+    """
     obj.race = "(aarakocra)"
     obj.abilities[1] += 2 # +2 to Dex
     obj.abilities[4] += 2 # +2 to Wis
+    obj.features["Dive Attack"] = "If the aarakocra is flying and dives at least 30 feet straight toward a target and then hits it with a melee weapon attack, the attack deals an extra 3 (1d6) damage to the target"
+    obj.actions["Talon"] = ['Melee',
+        obj.find_attk_mod(obj.modifiers[0]),
+        5,
+        obj.find_damage(6, obj.modifiers[0]),
+        '1d6 + {}'.format(obj.modifiers[0]), 'piercing']
+    obj.speed["ground"] = 20
+    obj.speed["fly"] = 50
+    obj.languages.append("Auran")
 
 def bullywug(obj):
     obj.race = "(bullywug)"
