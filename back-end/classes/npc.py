@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from __future__ import division
 import random
 import math
 import json
@@ -24,19 +25,22 @@ class NPC:
         self.modifiers = [0,0,0,0,0,0]
         self.proficiency = 2
         self.armor = 10
-        self.hp = 1
-        self.dicecode = "1d6"
-        self.skills = {'Medicine':4}
-        self.senses = ["passive Perception 10"]
+        self.hp = 4
+        self.dicecode = "1d8"
+        self.skills = {}
+        self.senses = {"passive Perception": 10}
         self.languages = ["Common"]
         self.features = {}
         self.actions = {
-            "Club":['Melee',
+            "Club": [
+                'Melee',
                 self.find_attk_mod(self.modifiers[0]),
                 5,
-                self.find_damage(4, self.modifers[0],
-                '1d4 + {}'.format(self.modifers[0]),
-                'bludgeoning']}
+                self.find_damage(4, self.modifiers[0]),
+                '1d4 + {}'.format(self.modifiers[0]),
+                'bludgeoning'
+            ],
+        }
         self.inventory = {}
         self.cast_level = 0
         self.caster = False
@@ -51,12 +55,21 @@ class NPC:
         return None;
 
     #Methods
+    def update_modifiers(self):
+        mods = [0,0,0,0,0,0]
+        for index in range(6):
+            mods[index] = (int(self.abilities[index])-10)//2
+        self.modifiers = mods
+
+    def update_perception(self):
+        self.senses["passive Perception"] = 8 + self.proficiency + self.modifiers[4]
+
     def find_attk_mod(self, mod):
-        attk_mod = self.prof + mod
+        attk_mod = self.proficiency + mod
         return attk_mod
 
     def find_damage(self, die, mod):
-        damage = sum(range(1, die+1))/die + mod
+        damage = sum(range(1, die+1))//die + mod*die
         return damage
 
     def find_cr(self):
