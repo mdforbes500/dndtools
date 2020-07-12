@@ -1,0 +1,58 @@
+{
+    "abilities": [
+        {
+            "str_mod": null,
+            "strength": null
+        },
+        {
+            "dex_mod": null,
+            "dexterity": null
+        },
+        {
+            "con_mod": null,
+            "constitution": null
+        },
+        {
+            "int_mod": null,
+            "intelligence": null
+        },
+        {
+            "wis_mod": null,
+            "wisdom": null
+        },
+        {
+            "cha_mod": null,
+            "charisma": null
+        }
+    ],
+    "actions": null,
+    "alignment": null,
+    "armor": 0,
+    "cast_ability": null,
+    "cast_level": 0,
+    "cast_save": null,
+    "caster": null,
+    "cr": 0,
+    "dicecode": null,
+    "features": null,
+    "hp": 0,
+    "inventory": null,
+    "languages": null,
+    "name": "Test",
+    "proficiency": 0,
+    "race": null,
+    "senses": null,
+    "size": null,
+    "skills": null,
+    "slots": null,
+    "speed": {
+        "climb": null,
+        "fly": null,
+        "ground": null,
+        "swim": null
+    },
+    "spell_attk": null,
+    "spell_list": null,
+    "spells": null,
+    "type": null
+}
