@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import building as bldg
+from . import building as bldg
 import random
 from math import floor
 

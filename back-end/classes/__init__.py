@@ -1,4 +1,3 @@
-from . import npc
-from . import item
-from . import armor
-from . import races
+from . import npcs
+from . import world_building
+from . import items
