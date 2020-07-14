@@ -3,13 +3,13 @@
 import random as rd
 from . import npc
 
-class Commoner(npc.NPC):
+class Assassin(npc.NPC):
     """
     Commoner NPC template data model derived from the NPC super.
     """
     def __init__(self) -> None:
-        super().__init__("Commoner")
-        self.cr = 0
+        super().__init__("Assassin")
+        self.cr = 8
         self.size = "Medium"
         self.type = "humanoid"
         self.race = "human"

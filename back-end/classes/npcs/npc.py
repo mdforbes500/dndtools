@@ -27,8 +27,10 @@ class NPC:
         self.armor = 0
         self.hp = 0
         self.dicecode = None
+        self.saves = None
         self.skills = None
         self.senses = None
+        self.resistance = None
         self.languages = None
         self.features = None
         self.actions = None
@@ -85,14 +87,6 @@ class NPC:
             "features": self.features,
             "actions": self.actions,
             "inventory": self.inventory,
-            "cast_level": self.cast_level,
-            "caster": self.caster,
-            "cast_ability": self.cast_ability,
-            "cast_save": self.cast_save,
-            "spell_attk": self.spell_attk,
-            "spell_list": self.spell_list,
-            "spells": self.spells,
-            "slots": self.slots
         }
 
         exported_json = json.dumps(dict, sort_keys=True, indent=4)
@@ -140,12 +134,4 @@ class NPC:
         self.features = dict["features"]
         self.actions = dict["actions"]
         self.inventory = dict["inventory"]
-        self.cast_level = dict["cast_level"]
-        self.caster = dict["caster"]
-        self.cast_ability = dict["cast_ability"]
-        self.cast_save = dict["cast_save"]
-        self.spell_attk = dict["spell_attk"]
-        self.spell_list = dict["spell_list"]
-        self.spells = dict["spells"]
-        self.slots = dict["slots"]
         f.close()

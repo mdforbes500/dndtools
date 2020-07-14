@@ -36,14 +36,6 @@ class TestNPC(unittest.TestCase):
         self.assertEqual(self.npc.features, None)
         self.assertEqual(self.npc.actions, None)
         self.assertEqual(self.npc.inventory, None)
-        self.assertEqual(self.npc.cast_level, 0)
-        self.assertEqual(self.npc.caster, None)
-        self.assertEqual(self.npc.cast_ability, None)
-        self.assertEqual(self.npc.cast_save, None)
-        self.assertEqual(self.npc.spell_attk, None)
-        self.assertEqual(self.npc.spell_list, None)
-        self.assertEqual(self.npc.spells, None)
-        self.assertEqual(self.npc.slots, None)
 
     def test_export(self):
         self.npc.export_json("test.json")
