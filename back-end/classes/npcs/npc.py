@@ -5,6 +5,44 @@ import random
 import math
 import json
 
+#find the hit dice range
+cr_table = {
+    "0":        (1,6),
+    "0.125":    (7,35),
+    "0.25":     (36,49),
+    "0.5":      (50,70),
+    "1":        (71,85),
+    "2":        (86,100),
+    "3":        (101,115),
+    "4":        (116,130),
+    "5":        (131,145),
+    "6":        (146,160),
+    "7":        (161,175),
+    "8":        (176,190),
+    "9":        (191,205),
+    "10":       (206,220),
+    "11":       (221,235),
+    "12":       (236,250),
+    "13":       (251,265),
+    "14":       (266,280),
+    "15":       (281,295),
+    "16":       (296,310),
+    "17":       (311,325),
+    "18":       (326,340),
+    "19":       (341,355),
+    "20":       (356,400),
+    "21":       (401,445),
+    "22":       (446,490),
+    "23":       (491,535),
+    "24":       (536,580),
+    "25":       (581,625),
+    "26":       (626,670),
+    "27":       (671,715),
+    "28":       (716,760),
+    "29":       (761,805),
+    "30":       (806,850)
+}
+
 class NPC:
     """
     NPC: Contains a model of an NPC's basic statistics necessary for generating
@@ -26,6 +64,7 @@ class NPC:
         self.proficiency = 0
         self.armor = 0
         self.hp = 0
+        self.hit_die = None
         self.dicecode = None
         self.saves = None
         self.skills = None
@@ -35,11 +74,15 @@ class NPC:
         self.features = None
         self.actions = None
         self.inventory = None
+        self.reactions = None
 
     def __del__(self):
         return None
 
     #Methods
+    def set_name(self, name):
+        self.name = name
+
     def update_modifiers(self):
         mods = [0,0,0,0,0,0]
         for index in range(6):
@@ -49,16 +92,76 @@ class NPC:
     def update_perception(self):
         self.senses["passive Perception"] = 8 + self.proficiency + self.modifiers[4]
 
-    def find_attk_mod(self, mod):
-        attk_mod = self.proficiency + mod
-        return attk_mod
+    def find_hit_dice(self):
+        if self.size is "Tiny":
+            self.hit_die = 4
+        elif self.size is "Small":
+            self.hit_die = 6
+        elif self.size is "Medium":
+            self.hit_die = 8
+        elif self.size is "Large":
+            self.hit_die = 10
+        elif self.size is "Huge":
+            self.hit_die = 12
+        elif self.size is "Gargantuan":
+            self.hit_die = 20
+        else:
+            raise("Not a valid size classification")
 
-    def find_damage(self, die, mod):
+    def find_proficiency(self):
+        cr_table = {
+            "0":        2,
+            "0.125":    2,
+            "0.25":     2,
+            "0.5":      2,
+            "1":        2,
+            "2":        2,
+            "3":        2,
+            "4":        2,
+            "5":        3,
+            "6":        3,
+            "7":        3,
+            "8":        3,
+            "9":        4,
+            "10":       4,
+            "11":       4,
+            "12":       4,
+            "13":       5,
+            "14":       5,
+            "15":       5,
+            "16":       5,
+            "17":       6,
+            "18":       6,
+            "19":       6,
+            "20":       6,
+            "21":       7,
+            "22":       7,
+            "23":       7,
+            "24":       7,
+            "25":       8,
+            "26":       8,
+            "27":       8,
+            "28":       8,
+            "29":       9,
+            "30":       9
+        }
+        return cr_table[str(self.cr)]
+
+    def attack_modifier(self, modifier):
+        return self.proficiency + modifier
+
+    def find_damage(self, dicecode, mod):
         damage = sum(range(1, die+1))//die + mod*die
         return damage
 
     def find_cr(self):
         pass
+
+    def spell_attack(self, modifier):
+        return modifier + self.proficiency
+    
+    def spell_save(self, modifier):
+        return 8 + modifier + self.proficiency
 
     def export_json(self, fh: str) -> None:
         dict = {
