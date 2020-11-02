@@ -28,8 +28,8 @@ class Settlement:
         self.type = type
 
         #Statistics
-        self.size = None
         self.population = None
+        self.size = None
 
         # Commerce
         self.gplimit = None
@@ -441,7 +441,6 @@ class Settlement:
         # Determine highest level NPCs & multiply based on NPC level
         adepts = [random.randint(1,6) + mod]
         adepts = multiply_npcs(adepts)
-        print(adepts)
 
         aristocrats = [random.randint(1,4) + mod]
         aristocrats = multiply_npcs(aristocrats)
