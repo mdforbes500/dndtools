@@ -2,44 +2,6 @@
 import random
 import classes.npc as npc
 
-def aarakocra(obj: npc.NPC) -> None:
-    """
-    Takes an NPC template and alters it to have the racial abilities given in
-    the DM's Guide.
-    """
-    obj.size = "Medium"
-    obj.type = "humanoid"
-    obj.race = "(aarakocra)"
-    obj.abilities[1] += 2 # +2 to Dex
-    obj.abilities[4] += 2 # +2 to Wis
-    obj.update_modifiers()
-    obj.update_perception()
-    obj.features["Dive Attack"] = "If the aarakocra is flying and dives at least 30 feet straight toward a target and then hits it with a melee weapon attack, the attack deals an extra 3 (1d6) damage to the target"
-    obj.actions["Talon"] = ['Melee',
-        obj.find_attk_mod(obj.modifiers[0]),
-        5,
-        obj.find_damage(4, obj.modifiers[0]),
-        '1d4 + {}'.format(obj.modifiers[0]), 'piercing']
-    obj.speed["ground"] = 20
-    obj.speed["fly"] = 50
-    obj.languages.append("Auran")
-
-def bullywug(obj):
-    obj.size = "Medium"
-    obj.type = "humanoid"
-    obj.race = "(bullywug)"
-    obj.abilities[3] -= 2 # -2 to Int
-    obj.abilities[5] -= 2 # -2 to Cha
-    obj.update_modifiers()
-    obj.update_perception()
-    obj.features["Amphibious"] = "The bullywug can breathe air and water."
-    obj.features["Speak with Frogs and Toads"] = "The bullywug can communicate simple concepts to frogs and toads when it speaks in Bullywug."
-    obj.features["Swamp Camouflage"] = "The bullywug has advantage on Dexterity (Stealth) checks made to hide in swampy terrain."
-    obj.features["Standing Leap"] = "The bullywug's long jump is up to 20 feet and its high jump is up to 10 feet, with or without a running start."
-    obj.speed["ground"] = 20
-    obj.speed["swim"] = 40
-    obj.langauges.append("Bullywug")
-
 def dragonborn(obj):
     obj.race = "(dragonborn)"
     obj.abilities[0] += 2 # +2 to Str
