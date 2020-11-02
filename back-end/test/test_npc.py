@@ -12,7 +12,7 @@ class TestNPC(unittest.TestCase):
         """
         Sets up NPC object for testing
         """
-        self.npc = cs.npc.NPC("Test NPC")
+        self.aarakocra = cs.races.aarakocra(cs.npc.NPC("Test NPC"))
 
     #=============ADD TESTS HERE \/\/\/\/===================#
     def test_aarakocra(self):

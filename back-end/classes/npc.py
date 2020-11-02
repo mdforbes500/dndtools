@@ -50,6 +50,11 @@ class NPC:
         self.spell_list = ""
         self.spells = []
         self.slots = []
+        self.vulnerable = []
+        self.dmg_resist = []
+        self.cond_resist = []
+        self.dmg_immune = []
+        self.cond_immune = []
 
     def __del__(self):
         return None;
