@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from context import classes
+from context.classes.npcs import acolyte
 import unittest
 import os
 
@@ -13,7 +13,7 @@ class TestNPC(unittest.TestCase):
         """
         Sets up NPC object for testing
         """
-        self.npc = classes.npcs.acolyte.Acolyte()
+        self.npc = acolyte.Acolyte()
 
     #====================ADD TESTS HERE=====================#
     def test_acolyte(self):
